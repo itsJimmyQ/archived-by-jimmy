@@ -12,7 +12,7 @@ const client = contentful.createClient({
 const LOCALE = 'en-US';
 
 // This API call will request a space with the specified ID
-client.getSpace('685js46qz33p').then((space) => {
+client.getSpace(process.env.SPACE_ID).then((space) => {
   // This API call will request an environment with the specified ID
   space.getEnvironment('master').then(async (environment) => {
     // Now that we have an environment, we can get entries from that space
