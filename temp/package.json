@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "contentful-management": "^10.35.3"
+  }
+}
