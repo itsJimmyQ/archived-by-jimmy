@@ -1,9 +1,12 @@
-import { createClient } from 'contentful-management';
+const contentful = require('contentful-management');
+const path = require('path');
 
-const client = createClient({
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+
+const client = contentful.createClient({
   // This is the access token for this space. Normally you get the token in the Contentful web app
   // accessToken: process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
-  accessToken: 'CFPAT-_22nHgi4OTpBUmSM17ZJ5vxLtMSIOz4kvWGQXoLtHdI',
+  accessToken: process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
 });
 
 const LOCALE = 'en-US';
@@ -13,47 +16,44 @@ client.getSpace('685js46qz33p').then((space) => {
   // This API call will request an environment with the specified ID
   space.getEnvironment('master').then(async (environment) => {
     // Now that we have an environment, we can get entries from that space
-    environment.getEntries().then((entries) => {
-      console.log(entries.items);
-    });
+    // environment.getEntries().then((entries) => {
+    //   console.log(entries.items);
+    // });
 
     const mediaAssets = await environment.getAssets().then((assets) => {
       return assets.items;
     });
 
     mediaAssets.forEach((asset) => {
-      const assetEntryTitle = asset.fields.title[LOCALE];
-      const assetEntryId = asset.sys.id;
+      const { fields } = asset;
+      const assetTitle = asset.fields.title[LOCALE];
+      const assetId = asset.sys.id;
+      const assetDimensions = fields.file[LOCALE].details.image;
+      const orientation = getAssetOrientation(assetDimensions);
 
       environment.createEntry('image', {
         fields: {
           title: {
-            [LOCALE]: assetEntryTitle,
+            [LOCALE]: assetTitle,
           },
           asset: {
             [LOCALE]: {
               sys: {
                 type: 'Link',
                 linkType: 'Asset',
-                id: assetEntryId,
+                id: assetId,
               },
             },
           },
           orientation: {
-            [LOCALE]: 'Landscape',
+            [LOCALE]: orientation,
           },
         },
       });
     });
-
-    // // let's get a content type
-    // environment.getContentType('image').then((contentType) => {
-    //   console.log(contentType)
-    //   // // and now let's update its name
-    //   // contentType.name = 'New Product'
-    //   // contentType.update().then((updatedContentType) => {
-    //   //   console.log('Update was successful')
-    //   // })
-    // })
   });
 });
+
+const getAssetOrientation = (dimensions) => {
+  return dimensions.width > dimensions.height ? 'Landscape' : 'Portrait';
+};
