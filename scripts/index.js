@@ -1,10 +1,10 @@
-import contentful from 'contentful-management'
+import { createClient } from 'contentful-management';
 
-const client = contentful.createClient({
+const client = createClient({
   // This is the access token for this space. Normally you get the token in the Contentful web app
   // accessToken: process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
   accessToken: 'CFPAT-_22nHgi4OTpBUmSM17ZJ5vxLtMSIOz4kvWGQXoLtHdI',
-})
+});
 
 const LOCALE = 'en-US';
 
@@ -14,8 +14,8 @@ client.getSpace('685js46qz33p').then((space) => {
   space.getEnvironment('master').then(async (environment) => {
     // Now that we have an environment, we can get entries from that space
     environment.getEntries().then((entries) => {
-      console.log(entries.items)
-    })
+      console.log(entries.items);
+    });
 
     const mediaAssets = await environment.getAssets().then((assets) => {
       return assets.items;
@@ -36,16 +36,15 @@ client.getSpace('685js46qz33p').then((space) => {
                 type: 'Link',
                 linkType: 'Asset',
                 id: assetEntryId,
-              }
-            }
+              },
+            },
           },
           orientation: {
             [LOCALE]: 'Landscape',
-          }
-        }
-      })
-    })
-
+          },
+        },
+      });
+    });
 
     // // let's get a content type
     // environment.getContentType('image').then((contentType) => {
@@ -56,5 +55,5 @@ client.getSpace('685js46qz33p').then((space) => {
     //   //   console.log('Update was successful')
     //   // })
     // })
-  })
+  });
 });
