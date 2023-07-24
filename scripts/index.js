@@ -12,7 +12,7 @@ const client = contentful.createClient({
 const LOCALE = 'en-US';
 
 // This API call will request a space with the specified ID
-client.getSpace(process.env.SPACE_ID).then((space) => {
+client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
   // This API call will request an environment with the specified ID
   space.getEnvironment('master').then(async (environment) => {
     const { items: existingEntries } = await environment.getEntries({
@@ -68,7 +68,7 @@ client.getSpace(process.env.SPACE_ID).then((space) => {
 });
 
 const getAssetOrientation = (dimensions) => {
-  if (dimensions.width === dimensions.height) return 'Neutral';
+  if (dimensions.width === dimensions.height) return 'Square';
 
   return dimensions.width > dimensions.height ? 'Landscape' : 'Portrait';
 };

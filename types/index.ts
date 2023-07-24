@@ -1,1 +1,1 @@
-export type { GalleryImage, GalleryImageOrientation } from 'services/hooks/useGallery';
+export type { FormattedImage } from 'modules/gallery/types';
