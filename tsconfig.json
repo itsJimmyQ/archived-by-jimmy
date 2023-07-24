@@ -21,10 +21,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "modules": ["src/components/modules/index"],
-      "modules/*": ["src/components/modules/*"],
-      "common": ["src/components/common/index"],
-      "common/*": ["src/components/common/*"],
+      "modules": ["app/components/modules/index"],
+      "modules/*": ["app/components/modules/*"],
+      "common": ["app/components/common/index"],
+      "common/*": ["app/components/common/*"],
       "layouts": ["src/components/layouts/index"],
       "layouts/*": ["src/components/layouts/*"],
       "hooks": ["src/services/hooks/index"],
@@ -32,10 +32,10 @@
       "images/*": ["public/images/*"],
       "styles": ["src/styles/index"],
       "styles/*": ["src/styles/*"],
-      "services": ["src/services"],
-      "services/*": ["src/services/*"],
+      "services": ["services"],
+      "services/*": ["services/*"],
       "queries/*": ["src/queries/*"],
-      "types": ["src/types/index"],
+      "types": ["types/index"],
       "vectors/*": ["public/vectors/*"]
     }
   },
