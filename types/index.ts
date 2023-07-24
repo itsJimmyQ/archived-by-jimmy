@@ -1,1 +1,1 @@
-export type { FormattedImage } from 'modules/gallery/types';
+export type { FormattedImage, ImageContentType } from 'modules/gallery/types';

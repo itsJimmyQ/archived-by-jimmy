@@ -15,4 +15,4 @@ export type FormattedImage = {
   orientation: GalleryImageOrientation;
 };
 
-export type GalleryImageOrientation = 'Landscape' | 'portrait' | 'square';
+export type GalleryImageOrientation = 'landscape' | 'portrait' | 'square';

@@ -6,6 +6,6 @@ export const convertEntryToImageObj = (entry: Contentful.Entry<ImageContentType>
     title: entry.fields.title || 'Untitled',
     //@ts-ignore
     src: entry.fields.asset.fields.file.url,
-    date: entry.fields.date,
+    orientation: (entry.fields.orientation as string).toLowerCase(),
   } as FormattedImage;
 };
