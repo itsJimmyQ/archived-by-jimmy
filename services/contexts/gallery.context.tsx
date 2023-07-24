@@ -15,22 +15,17 @@ const SPACES = {
 const TOTAL_SPACES = 4;
 
 export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {
+  const [activeTopImages, setActiveTopImages] = React.useState<i.FormattedImage[]>([]);
+  const [activeBottomImages, setActiveBottomImages] = React.useState<i.FormattedImage[]>([]);
   const [loadedImages, setLoadedImages] = React.useState<i.FormattedImage[]>([]);
   const [amountImages, setAmountImages] = React.useState<number | undefined>(undefined);
-
-  // Top row
-  const [activeTopImages, setActiveTopImages] = React.useState<i.FormattedImage[]>([]);
-  // Bottom row
-  const [activeBottomImages, setActiveBottomImages] = React.useState<i.FormattedImage[]>([]);
-
-  const [activeImage, setActiveImage] = React.useState<i.FormattedImage | undefined>(undefined);
   const [guardImageIndex, setGuardImageIndex] = React.useState<number | undefined>(undefined);
 
   const progress =
     amountImages === undefined ? 0 : Math.round((loadedImages.length / amountImages) * 100);
 
   React.useEffect(() => {
-    getImages().then(async (res) => {
+    getImages().then((res) => {
       const images = res.results;
       const amountImages = images.length;
 
@@ -60,7 +55,10 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
       const currOrientation = currImage.orientation;
       const currImageSpaces = SPACES[currOrientation];
 
+      // Skip if the image does not fix the remaining spaces
+      // or if the image is already active
       if (currImageSpaces > remainingSpaces) continue;
+      if (activeImages.find((image) => image.src === currImage.src)) continue;
       else {
         activeImages.push(currImage);
         remainingSpaces -= currImageSpaces;
@@ -98,37 +96,14 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     getRandomImages('BOTTOM');
   };
 
-  const onGetRandomImage = () => {
-    if (guardImageIndex === undefined) return;
-
-    // Get a random index within the range of [0, guardImageIndex]
-    const randomIndex = Math.floor(Math.random() * guardImageIndex);
-    // Push the new image to the end of the list
-    const updatedImages = [...loadedImages];
-    const randomImage = updatedImages.splice(randomIndex, 1)[0];
-    updatedImages.push(randomImage);
-
-    setActiveImage(randomImage);
-    setLoadedImages(updatedImages);
-
-    // Reset guard index when the entire list is traversed
-    if (guardImageIndex === 0) {
-      setGuardImageIndex(loadedImages.length - 1);
-    } else {
-      setGuardImageIndex(guardImageIndex - 1);
-    }
-  };
-
   return (
     <GalleryContext.Provider
       value={{
         images: loadedImages,
         activeTopImages,
         activeBottomImages,
-        activeImage,
         progress,
         onShuffleImages,
-        onGetRandomImage,
       }}
     >
       {children}
@@ -143,9 +118,7 @@ type GalleryContextProviderProps = {
 type GalleryContext = {
   activeTopImages: i.FormattedImage[];
   activeBottomImages: i.FormattedImage[];
-  activeImage: i.FormattedImage | undefined;
   images: i.FormattedImage[];
   progress: number;
   onShuffleImages: () => void;
-  onGetRandomImage: () => void;
 };
