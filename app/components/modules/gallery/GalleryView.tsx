@@ -8,6 +8,16 @@ import { useGallery } from 'hooks';
 export const GalleryView = () => {
   const { activeImages, onShuffleImages, progress } = useGallery();
 
+  React.useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 's' || e.key === 'S') {
+        onShuffleImages();
+      }
+    });
+
+    return document.removeEventListener('keydown', onShuffleImages);
+  });
+
   const isLoading = progress < 100;
 
   return (
