@@ -12,7 +12,7 @@ export const GalleryView = () => {
 
   return (
     <>
-      <div className="w-auto max-w-full h-full grid grid-cols-4 grid-rows-2 gap-4 mx-auto aspect-[1.375]">
+      <div className="w-auto max-w-full h-full grid grid-cols-4 grid-rows-2 gap-4 mx-auto aspect-[1.33]">
         {isLoading && <h1>{progress}</h1>}
 
         {!isLoading &&

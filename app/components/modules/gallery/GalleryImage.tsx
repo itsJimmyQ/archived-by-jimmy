@@ -12,11 +12,11 @@ const galleryImageStyle: Record<string, string> = {
 
 export const GalleryImage = ({ image }: GalleryImageProps) => {
   let amountColumns;
-  if (image.orientation === 'portrait') amountColumns = 1;
-  else amountColumns = 2;
+  if (image.orientation === 'portrait') amountColumns = `col-span-1`;
+  else amountColumns = `col-span-2`;
 
   return (
-    <div className={`w-full h-full col-span-${amountColumns}`}>
+    <div className={clsx('w-full h-full', amountColumns)}>
       <img
         className={clsx('h-full mx-auto object-cover', galleryImageStyle[image.orientation])}
         src={image.src}
