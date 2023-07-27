@@ -56,11 +56,10 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     onShuffleImages();
   }, [progress]);
 
-  const getRandomImage = (guardIndex: number) => {
-    console.log(guardIndex);
+  const getRandomImage = (images: i.FormattedImage[], guardIndex: number) => {
     // Get a random index within the range of [0, guardImageIndex]
     const randomIndex = Math.floor(Math.random() * guardIndex);
-    const randomImage = loadedImages[randomIndex];
+    const randomImage = images[randomIndex];
 
     return {
       image: randomImage,
@@ -82,12 +81,16 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     let localGuardImageIndex = guardImageIndex;
     const shuffledImages = [...loadedImages];
 
-    while (remainingSpaces > 0 && rowCounter < TOTAL_ROWS) {
-      const { image: currImage, index: currIndex } = getRandomImage(localGuardImageIndex);
+    // If there are still spaces left and there are also more rows to fill
+    while (remainingSpaces > 0) {
+      const { image: currImage, index: currIndex } = getRandomImage(
+        shuffledImages,
+        localGuardImageIndex,
+      );
 
       if (SPACES[currImage.orientation] > remainingSpaces) continue;
 
-      // Upadte remaining spaces
+      // Update remaining spaces
       remainingSpaces -= SPACES[currImage.orientation];
 
       // Put the image to the end of list
@@ -101,7 +104,8 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
       if (localGuardImageIndex === 0) localGuardImageIndex = loadedImages.length - 1;
       else localGuardImageIndex -= 1;
 
-      if (remainingSpaces === 0 && rowCounter < TOTAL_ROWS) {
+      // If theres still rows left to be filled, reset the remaining spaces
+      if (remainingSpaces === 0 && rowCounter < TOTAL_ROWS - 1) {
         rowCounter += 1;
         remainingSpaces = TOTAL_COLS;
       }
