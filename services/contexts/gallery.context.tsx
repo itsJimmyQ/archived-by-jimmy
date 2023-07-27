@@ -12,11 +12,20 @@ const SPACES = {
   landscape: 2,
   square: 2,
 };
-const TOTAL_SPACES = 4;
+const TOTAL_COLS = 4;
+const TOTAL_ROWS = 2;
+
+// 1. Get a random image
+// 2. Check its orientation
+// 3. Compute remaining spaces
+// 4. Get another random image
+// 5. Check its orientation
+// 6. Compute remaining spaces
+// 7. Repeat until remaining spaces is 0
+// 8. If remaining spaces is 0, push the images to the active images
 
 export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {
-  const [activeTopImages, setActiveTopImages] = React.useState<i.FormattedImage[]>([]);
-  const [activeBottomImages, setActiveBottomImages] = React.useState<i.FormattedImage[]>([]);
+  const [activeImages, setActiveImages] = React.useState<i.FormattedImage[]>([]);
   const [loadedImages, setLoadedImages] = React.useState<i.FormattedImage[]>([]);
   const [amountImages, setAmountImages] = React.useState<number | undefined>(undefined);
   const [guardImageIndex, setGuardImageIndex] = React.useState<number | undefined>(undefined);
@@ -24,6 +33,7 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
   const progress =
     amountImages === undefined ? 0 : Math.round((loadedImages.length / amountImages) * 100);
 
+  // Initial config and preloading images
   React.useEffect(() => {
     getImages().then((res) => {
       const images = res.results;
@@ -46,62 +56,77 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     onShuffleImages();
   }, [progress]);
 
-  const getRandomImages = (position: 'TOP' | 'BOTTOM') => {
-    const activeImages: i.FormattedImage[] = [];
-    let remainingSpaces = TOTAL_SPACES;
+  const getRandomImage = (guardIndex: number) => {
+    console.log(guardIndex);
+    // Get a random index within the range of [0, guardImageIndex]
+    const randomIndex = Math.floor(Math.random() * guardIndex);
+    const randomImage = loadedImages[randomIndex];
 
-    while (remainingSpaces > 0) {
-      const currImage = getRandomImage();
-      const currOrientation = currImage.orientation;
-      const currImageSpaces = SPACES[currOrientation];
+    return {
+      image: randomImage,
+      index: randomIndex,
+    };
+  };
 
-      // Skip if the image does not fix the remaining spaces
-      // or if the image is already active
-      if (currImageSpaces > remainingSpaces) continue;
-      if (activeImages.find((image) => image.src === currImage.src)) continue;
-      else {
-        activeImages.push(currImage);
-        remainingSpaces -= currImageSpaces;
+  const getRandomImages = () => {
+    if (guardImageIndex === undefined)
+      return {
+        shuffledImages: loadedImages,
+        updatedGuardIndex: loadedImages.length,
+        activeImages: loadedImages.slice(7),
+      };
+
+    let images: i.FormattedImage[] = [];
+    let remainingSpaces = TOTAL_COLS;
+    let rowCounter = 0;
+    let localGuardImageIndex = guardImageIndex;
+    const shuffledImages = [...loadedImages];
+
+    while (remainingSpaces > 0 && rowCounter < TOTAL_ROWS) {
+      const { image: currImage, index: currIndex } = getRandomImage(localGuardImageIndex);
+
+      if (SPACES[currImage.orientation] > remainingSpaces) continue;
+
+      // Upadte remaining spaces
+      remainingSpaces -= SPACES[currImage.orientation];
+
+      // Put the image to the end of list
+      shuffledImages.splice(currIndex, 1);
+      shuffledImages.push(currImage);
+
+      // Add the image to the active images
+      images.push(currImage);
+
+      // Update local variables
+      if (localGuardImageIndex === 0) localGuardImageIndex = loadedImages.length - 1;
+      else localGuardImageIndex -= 1;
+
+      if (remainingSpaces === 0 && rowCounter < TOTAL_ROWS) {
+        rowCounter += 1;
+        remainingSpaces = TOTAL_COLS;
       }
     }
 
-    if (position === 'TOP') setActiveTopImages(activeImages);
-    else setActiveBottomImages(activeImages);
-  };
-
-  const getRandomImage = () => {
-    if (guardImageIndex === undefined) return loadedImages[0];
-
-    // Get a random index within the range of [0, guardImageIndex]
-    const randomIndex = Math.floor(Math.random() * guardImageIndex);
-    // Push the new image to the end of the list
-    const updatedImages = [...loadedImages];
-    const randomImage = updatedImages.splice(randomIndex, 1)[0];
-    updatedImages.push(randomImage);
-
-    setLoadedImages(updatedImages);
-
-    // Reset guard index when the entire list is traversed
-    if (guardImageIndex === 0) {
-      setGuardImageIndex(loadedImages.length - 1);
-    } else {
-      setGuardImageIndex(guardImageIndex - 1);
-    }
-
-    return randomImage;
+    return {
+      shuffledImages,
+      updatedGuardIndex: localGuardImageIndex,
+      activeImages: images,
+    };
   };
 
   const onShuffleImages = () => {
-    getRandomImages('TOP');
-    getRandomImages('BOTTOM');
+    const { shuffledImages, updatedGuardIndex, activeImages } = getRandomImages();
+
+    setLoadedImages(shuffledImages);
+    setActiveImages(activeImages);
+    setGuardImageIndex(updatedGuardIndex);
   };
 
   return (
     <GalleryContext.Provider
       value={{
         images: loadedImages,
-        activeTopImages,
-        activeBottomImages,
+        activeImages,
         progress,
         onShuffleImages,
       }}
@@ -116,8 +141,7 @@ type GalleryContextProviderProps = {
 };
 
 type GalleryContext = {
-  activeTopImages: i.FormattedImage[];
-  activeBottomImages: i.FormattedImage[];
+  activeImages: i.FormattedImage[];
   images: i.FormattedImage[];
   progress: number;
   onShuffleImages: () => void;
