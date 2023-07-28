@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const contentful = require('contentful-management');
 const path = require('path');
 
@@ -27,7 +28,6 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
 
     mediaAssets.forEach((asset) => {
       const { fields } = asset;
-      const assetTitle = asset.fields.title[LOCALE];
       const assetId = asset.sys.id;
       const assetDimensions = fields.file[LOCALE].details.image;
       const orientation = getAssetOrientation(assetDimensions);
@@ -42,7 +42,7 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
             .createEntry('image', {
               fields: {
                 title: {
-                  [LOCALE]: assetTitle,
+                  [LOCALE]: uuidv4(),
                 },
                 asset: {
                   [LOCALE]: {
