@@ -8,16 +8,6 @@ import { useGallery } from 'hooks';
 export const GalleryView = () => {
   const { activeImages, onShuffleImages } = useGallery();
 
-  React.useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 's' || e.key === 'S') {
-        onShuffleImages();
-      }
-    });
-
-    return document.removeEventListener('keydown', onShuffleImages);
-  }, []);
-
   return (
     <>
       <div className="w-auto max-w-full h-full grid grid-cols-4 grid-rows-1 gap-4 mx-auto aspect-video">
