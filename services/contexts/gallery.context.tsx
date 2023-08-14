@@ -13,48 +13,42 @@ const SPACES = {
   square: 2,
 };
 const TOTAL_COLS = 4;
-const TOTAL_ROWS = 2;
-
-// 1. Get a random image
-// 2. Check its orientation
-// 3. Compute remaining spaces
-// 4. Get another random image
-// 5. Check its orientation
-// 6. Compute remaining spaces
-// 7. Repeat until remaining spaces is 0
-// 8. If remaining spaces is 0, push the images to the active images
+const TOTAL_ROWS = 1;
 
 export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {
-  const [activeImages, setActiveImages] = React.useState<i.FormattedImage[]>([]);
-  const [loadedImages, setLoadedImages] = React.useState<i.FormattedImage[]>([]);
-  const [amountImages, setAmountImages] = React.useState<number | undefined>(undefined);
+  const [activeImages, setActiveImages] = React.useState<ActiveImages>({
+    currBatch: [],
+    nextBatch: [],
+  });
+  const [isReady, setIsReady] = React.useState<boolean>(false);
+  const [availableImages, setAvailableImages] = React.useState<i.FormattedImage[]>([]);
   const [guardImageIndex, setGuardImageIndex] = React.useState<number | undefined>(undefined);
 
-  const progress =
-    amountImages === undefined ? 0 : Math.round((loadedImages.length / amountImages) * 100);
-
-  // Initial config and preloading images
+  // Initial setup
   React.useEffect(() => {
     getImages().then((res) => {
       const images = res.results;
       const amountImages = images.length;
 
-      setAmountImages(amountImages);
       setGuardImageIndex(amountImages - 1);
-
-      images.forEach((image) => {
-        preloadImage(image.src).then(() => {
-          setLoadedImages((currImages) => [...currImages, image]);
-        });
-      });
+      setAvailableImages(images);
+      setIsReady(true);
     });
   }, []);
 
+  // Get initial images after initial setup
   React.useEffect(() => {
-    if (progress < 100) return;
+    if (!isReady || guardImageIndex === undefined) return;
 
-    onShuffleImages();
-  }, [progress]);
+    getInitialImages(availableImages, guardImageIndex);
+  }, [isReady]);
+
+  // Preload next batch of images
+  React.useEffect(() => {
+    if (activeImages.nextBatch.length === 0) return;
+
+    activeImages.nextBatch.forEach((image) => preloadImage(image.src));
+  }, [activeImages.nextBatch]);
 
   const getRandomImage = (images: i.FormattedImage[], guardIndex: number) => {
     // Get a random index within the range of [0, guardImageIndex]
@@ -67,19 +61,28 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     };
   };
 
-  const getRandomImages = () => {
-    if (guardImageIndex === undefined)
+  // 1. Get a random image
+  // 2. Check its orientation
+  // 3. Compute remaining spaces
+  // 4. Get another random image
+  // 5. Check its orientation
+  // 6. Compute remaining spaces
+  // 7. Repeat until remaining spaces is 0
+  // 8. If remaining spaces is 0, push the images to the active images
+  const getRandomImages = (images: i.FormattedImage[], guardIndex: number | undefined) => {
+    if (guardIndex === undefined) {
       return {
-        shuffledImages: loadedImages,
-        updatedGuardIndex: loadedImages.length,
-        activeImages: loadedImages.slice(7),
+        shuffledImages: images,
+        updatedGuardIndex: images.length,
+        activeImages: images.slice(7),
       };
+    }
 
-    let images: i.FormattedImage[] = [];
+    let localImages: i.FormattedImage[] = [];
     let remainingSpaces = TOTAL_COLS;
     let rowCounter = 0;
-    let localGuardImageIndex = guardImageIndex;
-    const shuffledImages = [...loadedImages];
+    let localGuardImageIndex = guardIndex;
+    const shuffledImages = [...images];
 
     // If there are still spaces left and there are also more rows to fill
     while (remainingSpaces > 0) {
@@ -98,10 +101,10 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
       shuffledImages.push(currImage);
 
       // Add the image to the active images
-      images.push(currImage);
+      localImages.push(currImage);
 
       // Update local variables
-      if (localGuardImageIndex === 0) localGuardImageIndex = loadedImages.length - 1;
+      if (localGuardImageIndex === 0) localGuardImageIndex = availableImages.length - 1;
       else localGuardImageIndex -= 1;
 
       // If theres still rows left to be filled, reset the remaining spaces
@@ -114,24 +117,61 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     return {
       shuffledImages,
       updatedGuardIndex: localGuardImageIndex,
-      activeImages: images,
+      activeImages: localImages,
     };
   };
 
-  const onShuffleImages = () => {
-    const { shuffledImages, updatedGuardIndex, activeImages } = getRandomImages();
+  // 1. Get initial batch of images
+  // 2. Get next batch of images
+  // 3. Preload next batch of images
+  // 4. On shuffle, use next batch of images as active images
+  // 5. Preload another batch of images
+  const getInitialImages = (images: i.FormattedImage[], guardIndex: number) => {
+    // Current batch
+    const {
+      shuffledImages: currShuffledImages,
+      updatedGuardIndex: currGuardIndex,
+      activeImages: currActivetImages,
+    } = getRandomImages(images, guardIndex);
 
-    setLoadedImages(shuffledImages);
-    setActiveImages(activeImages);
-    setGuardImageIndex(updatedGuardIndex);
+    // Next batch
+    const {
+      shuffledImages: nextShuffledImages,
+      updatedGuardIndex: nextGuardIndex,
+      activeImages: nextActiveImages,
+    } = getRandomImages(currShuffledImages, currGuardIndex);
+
+    setAvailableImages(nextShuffledImages);
+    setActiveImages({
+      currBatch: currActivetImages,
+      nextBatch: nextActiveImages,
+    });
+    setGuardImageIndex(nextGuardIndex);
+  };
+
+  const onShuffleImages = () => {
+    const newCurrBatch = activeImages.nextBatch;
+
+    // Get next batch
+    const {
+      shuffledImages: nextShuffledImages,
+      updatedGuardIndex: nextGuardIndex,
+      activeImages: nextActiveImages,
+    } = getRandomImages(availableImages, guardImageIndex);
+
+    setAvailableImages(nextShuffledImages);
+    setActiveImages({
+      currBatch: newCurrBatch,
+      nextBatch: nextActiveImages,
+    });
+    setGuardImageIndex(nextGuardIndex);
   };
 
   return (
     <GalleryContext.Provider
       value={{
-        images: loadedImages,
-        activeImages,
-        progress,
+        images: availableImages,
+        activeImages: activeImages.currBatch,
         onShuffleImages,
       }}
     >
@@ -147,6 +187,10 @@ type GalleryContextProviderProps = {
 type GalleryContext = {
   activeImages: i.FormattedImage[];
   images: i.FormattedImage[];
-  progress: number;
   onShuffleImages: () => void;
+};
+
+type ActiveImages = {
+  currBatch: i.FormattedImage[];
+  nextBatch: i.FormattedImage[];
 };
