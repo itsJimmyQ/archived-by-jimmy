@@ -4,21 +4,35 @@ import * as i from 'types';
 import * as React from 'react';
 import clsx from 'clsx';
 
-const galleryImageStyle: Record<string, string> = {
-  portrait: 'w-full',
-  landscape: 'w-auto',
-  square: 'w-auto',
-};
+const positions = [
+  ['top-[0%]', '-translate-y-[0%]'],
+  ['top-[10%', '-translate-y-[10%]'],
+  ['top-[20%]', '-translate-y-[20%]'],
+  ['top-[30%]', '-translate-y-[30%]'],
+  ['top-[40%]', '-translate-y-[40%]'],
+  ['top-[50%]', '-translate-y-[50%]'],
+  ['top-[60%]', '-translate-y-[60%]'],
+  ['top-[70%]', '-translate-y-[70%]'],
+  ['top-[80%]', '-translate-y-[80%]'],
+  ['top-[90%]', '-translate-y-[90%]'],
+  ['top-[100%]', '-translate-y-[100%]'],
+];
 
 export const GalleryImage = ({ image }: GalleryImageProps) => {
   let amountColumns;
+  let padding;
   if (image.orientation === 'portrait') amountColumns = `col-span-1`;
-  else amountColumns = `col-span-2`;
+  else {
+    if (image.orientation === 'square') padding = `px-12`;
+
+    amountColumns = `col-span-2`;
+  }
+  const position = positions[Math.floor(Math.random() * (positions.length - 1))];
 
   return (
-    <div className={clsx('w-full h-full', amountColumns)}>
+    <div className={clsx('w-full h-full relative', amountColumns, padding)}>
       <img
-        className={clsx('h-full mx-auto object-cover', galleryImageStyle[image.orientation])}
+        className={clsx('w-full absolute mx-auto object-cover rounded-sm left-0 right-0', position)}
         src={image.src}
         alt={image.title}
       />
