@@ -6,7 +6,7 @@ import clsx from 'clsx';
 
 const positions = [
   ['top-[0%]', '-translate-y-[0%]'],
-  ['top-[10%', '-translate-y-[10%]'],
+  ['top-[10%]', '-translate-y-[10%]'],
   ['top-[20%]', '-translate-y-[20%]'],
   ['top-[30%]', '-translate-y-[30%]'],
   ['top-[40%]', '-translate-y-[40%]'],
@@ -18,9 +18,10 @@ const positions = [
   ['top-[100%]', '-translate-y-[100%]'],
 ];
 
-export const GalleryImage = ({ image }: GalleryImageProps) => {
+export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   let amountColumns;
   let padding;
+  let opacity = isActive ? 'opacity-1' : 'opacity-0';
   if (image.orientation === 'portrait') amountColumns = `col-span-1`;
   else {
     if (image.orientation === 'square') padding = `px-12`;
@@ -30,9 +31,9 @@ export const GalleryImage = ({ image }: GalleryImageProps) => {
   const position = positions[Math.floor(Math.random() * (positions.length - 1))];
 
   return (
-    <div className={clsx('w-full h-full relative', amountColumns, padding)}>
+    <div className={clsx('w-full h-full relative transition-all', amountColumns, padding, opacity)}>
       <img
-        className={clsx('w-full absolute mx-auto object-cover rounded-sm left-0 right-0', position)}
+        className={clsx('absolute object rounded-md left-0 right-0', position)}
         src={image.src}
         alt={image.title}
       />
@@ -42,4 +43,5 @@ export const GalleryImage = ({ image }: GalleryImageProps) => {
 
 type GalleryImageProps = {
   image: i.FormattedImage;
+  isActive?: boolean;
 };

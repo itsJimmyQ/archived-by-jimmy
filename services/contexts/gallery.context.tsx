@@ -172,6 +172,7 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
       value={{
         images: availableImages,
         activeImages: activeImages.currBatch,
+        nextImages: activeImages.nextBatch,
         onShuffleImages,
       }}
     >
@@ -186,6 +187,7 @@ type GalleryContextProviderProps = {
 
 type GalleryContext = {
   activeImages: i.FormattedImage[];
+  nextImages: i.FormattedImage[];
   images: i.FormattedImage[];
   onShuffleImages: () => void;
 };
