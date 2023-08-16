@@ -84,14 +84,22 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     let localGuardImageIndex = guardIndex;
     const shuffledImages = [...images];
 
-    // If there are still spaces left and there are also more rows to fill
-    while (remainingSpaces > 0) {
+    let attemptCounter = 0;
+    // Loop as long as there's still spaces left to be filled and there's still images to be searched
+    while (remainingSpaces > 0 && attemptCounter < shuffledImages.length) {
+      attemptCounter++;
+
       const { image: currImage, index: currIndex } = getRandomImage(
         shuffledImages,
         localGuardImageIndex,
       );
 
+      // Skip iteration if the image does not fit the remaining spaces
       if (SPACES[currImage.orientation] > remainingSpaces) continue;
+      // Reset local guard index if there's no suitable images remaining
+      if (attemptCounter === shuffledImages.length) {
+        localGuardImageIndex = availableImages.length - 1;
+      }
 
       // Update remaining spaces
       remainingSpaces -= SPACES[currImage.orientation];
