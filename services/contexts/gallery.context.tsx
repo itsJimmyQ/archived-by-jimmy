@@ -20,9 +20,9 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     currBatch: [],
     nextBatch: [],
   });
-  const [isReady, setIsReady] = React.useState<boolean>(false);
   const [availableImages, setAvailableImages] = React.useState<i.FormattedImage[]>([]);
   const [guardImageIndex, setGuardImageIndex] = React.useState<number | undefined>(undefined);
+  const [isReady, setIsReady] = React.useState<boolean>(false);
 
   // Initial setup
   React.useEffect(() => {
@@ -84,11 +84,8 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
     let localGuardImageIndex = guardIndex;
     const shuffledImages = [...images];
 
-    let attemptCounter = 0;
     // Loop as long as there's still spaces left to be filled and there's still images to be searched
-    while (remainingSpaces > 0 && attemptCounter < shuffledImages.length) {
-      attemptCounter++;
-
+    while (remainingSpaces > 0) {
       const { image: currImage, index: currIndex } = getRandomImage(
         shuffledImages,
         localGuardImageIndex,
@@ -96,18 +93,12 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
 
       // Skip iteration if the image does not fit the remaining spaces
       if (SPACES[currImage.orientation] > remainingSpaces) continue;
-      // Reset local guard index if there's no suitable images remaining
-      if (attemptCounter === shuffledImages.length) {
-        localGuardImageIndex = availableImages.length - 1;
-      }
 
       // Update remaining spaces
       remainingSpaces -= SPACES[currImage.orientation];
-
       // Put the image to the end of list
       shuffledImages.splice(currIndex, 1);
       shuffledImages.push(currImage);
-
       // Add the image to the active images
       localImages.push(currImage);
 
@@ -167,11 +158,11 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
       activeImages: nextActiveImages,
     } = getRandomImages(availableImages, guardImageIndex);
 
-    setAvailableImages(nextShuffledImages);
     setActiveImages({
       currBatch: newCurrBatch,
       nextBatch: nextActiveImages,
     });
+    setAvailableImages(nextShuffledImages);
     setGuardImageIndex(nextGuardIndex);
   };
 
