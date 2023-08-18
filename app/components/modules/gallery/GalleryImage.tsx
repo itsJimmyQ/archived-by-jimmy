@@ -22,6 +22,7 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   let amountColumns;
   let padding;
   let opacity = isActive ? 'opacity-1' : 'opacity-0';
+  let visibility = isActive ? 'visible' : 'hidden';
   if (image.orientation === 'portrait') amountColumns = `col-span-1`;
   else {
     if (image.orientation === 'square') padding = `px-12`;
@@ -31,7 +32,15 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   const position = positions[Math.floor(Math.random() * (positions.length - 1))];
 
   return (
-    <div className={clsx('w-full h-full relative transition-all', amountColumns, padding, opacity)}>
+    <div
+      className={clsx(
+        'w-full h-full relative transition-all',
+        amountColumns,
+        padding,
+        opacity,
+        visibility,
+      )}
+    >
       <img
         className={clsx('absolute object rounded-md left-0 right-0', position)}
         src={image.src}

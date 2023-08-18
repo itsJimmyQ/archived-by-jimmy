@@ -1,11 +1,13 @@
 import { GalleryView } from 'modules/gallery';
+import { Navigation } from 'modules/navigation';
 
-const Home = () => {
+const HomePage = () => {
   return (
-    <main className="h-screen min-h-screen max-h-screen overflow-hidden pt-10 pb-24">
+    <main className="flex flex-col h-screen min-h-screen max-h-screen overflow-hidden pt-20">
       <GalleryView />
+      <Navigation />
     </main>
   );
 };
 
-export default Home;
+export default HomePage;
