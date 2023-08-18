@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import { GalleryImage } from './GalleryImage';
 import { useGallery } from 'hooks';
+import { Button } from 'common/interactions';
 
 export const GalleryView = () => {
   const { activeImages, onShuffleImages, nextImages } = useGallery();
@@ -18,12 +19,9 @@ export const GalleryView = () => {
           <GalleryImage key={image.title} {...{ image }} />
         ))}
       </div>
-      <button
-        className="absolute bottom-4 left-[50%] -translate-x-[50%] mx-auto p-4 border-solid border-2 border-sky-500 rounded-xl"
-        onClick={onShuffleImages}
-      >
+      <Button className="absolute left-[50%] -translate-x-[50%]" onClick={onShuffleImages}>
         Refresh
-      </button>
+      </Button>
     </>
   );
 };
