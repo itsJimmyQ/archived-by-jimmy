@@ -22,10 +22,13 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   let amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
   let opacity = isActive ? 'opacity-1' : 'opacity-0';
   let visibility = isActive ? 'visible' : 'hidden';
-  const position = positions[Math.floor(Math.random() * (positions.length - 1))];
+  const position = React.useMemo(
+    () => positions[Math.floor(Math.random() * (positions.length - 1))],
+    [image.src],
+  );
 
   return (
-    <div className={clsx('relative', amountColumns, opacity, visibility)}>
+    <div className={clsx('relative select-none', amountColumns, opacity, visibility)}>
       <img
         className={clsx('absolute object-contain rounded-[0.25rem]', position)}
         src={image.src}

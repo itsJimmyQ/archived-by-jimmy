@@ -12,15 +12,21 @@ export const Navigation = () => {
       <ul className="w-full flex justify-between">
         <div className="flex">
           <li>
-            <Button onClick={() => setActiveItem('WORK')}>Work</Button>
+            <Button onClick={() => setActiveItem('WORK')} isActive={activeItem === 'WORK'}>
+              Work
+            </Button>
           </li>
         </div>
         <div className="flex gap-6">
           <li>
-            <Button onClick={() => setActiveItem('ABOUT')}>About</Button>
+            <Button onClick={() => setActiveItem('ABOUT')} isActive={activeItem === 'ABOUT'}>
+              About
+            </Button>
           </li>
           <li>
-            <Button onClick={() => setActiveItem('CONTACT')}>Contact</Button>
+            <Button onClick={() => setActiveItem('CONTACT')} isActive={activeItem === 'CONTACT'}>
+              Contact
+            </Button>
           </li>
         </div>
       </ul>
