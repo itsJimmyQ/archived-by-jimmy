@@ -12,7 +12,7 @@ const SPACES = {
   landscape: 2,
   square: 2,
 };
-const TOTAL_COLS = 6;
+const TOTAL_COLS = 5;
 const TOTAL_ROWS = 1;
 
 export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {
@@ -47,7 +47,7 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
   React.useEffect(() => {
     if (activeImages.nextBatch.length === 0) return;
 
-    activeImages.nextBatch.forEach((image) => preloadImage(image.src));
+    Promise.all(activeImages.nextBatch.map((image) => preloadImage(image.src)));
   }, [activeImages.nextBatch]);
 
   const getRandomImage = (images: i.FormattedImage[], guardIndex: number) => {
