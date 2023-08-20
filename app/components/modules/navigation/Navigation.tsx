@@ -17,7 +17,7 @@ export const Navigation = () => {
             </Button>
           </li>
         </div>
-        <div className="flex gap-6">
+        <div className="flex gap-10">
           <li>
             <Button onClick={() => setActiveItem('ABOUT')} isActive={activeItem === 'ABOUT'}>
               About

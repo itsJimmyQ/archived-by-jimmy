@@ -11,7 +11,11 @@ export const Button = ({ children, isActive, className, ...props }: ButtonProps)
 
   return (
     <button
-      className={clsx('rounded-full cursor-pointer px-4 py-2', dynamicClassName, className)}
+      className={clsx(
+        'rounded-full cursor-pointer px-4 py-2 text-2xl',
+        dynamicClassName,
+        className,
+      )}
       {...{ ...props }}
     >
       {children}
