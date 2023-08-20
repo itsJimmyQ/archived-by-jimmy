@@ -12,10 +12,10 @@ export const GalleryView = () => {
   return (
     <div className="grow grid grid-cols-5 grid-rows-1 gap-6 aspect-video overflow-hidden">
       {activeImages.map((image) => (
-        <GalleryImage key={image.title} isActive {...{ image }} />
+        <GalleryImage key={image.src} isActive {...{ image }} />
       ))}
       {nextImages.map((image) => (
-        <GalleryImage key={image.title} {...{ image }} />
+        <GalleryImage key={image.src} {...{ image }} />
       ))}
     </div>
   );

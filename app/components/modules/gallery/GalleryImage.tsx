@@ -21,14 +21,16 @@ const positions = [
 export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   let amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
   let opacity = isActive ? 'opacity-1' : 'opacity-0';
-  let visibility = isActive ? 'visible' : 'hidden';
   const position = React.useMemo(
     () => positions[Math.floor(Math.random() * (positions.length - 1))],
     [image.src],
   );
+  const zIndex = isActive ? 'z-0' : '-z-1';
+
+  React.useEffect(() => console.log('mounted'), []);
 
   return (
-    <div className={clsx('relative select-none', amountColumns, opacity, visibility)}>
+    <div className={clsx('relative select-none transition-all', amountColumns, zIndex, opacity)}>
       <img
         className={clsx('absolute object-contain rounded-[0.25rem] transition-all ', position)}
         src={image.src}
