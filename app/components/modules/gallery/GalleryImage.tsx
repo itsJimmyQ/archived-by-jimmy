@@ -30,7 +30,7 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   return (
     <div className={clsx('relative select-none', amountColumns, opacity, visibility)}>
       <img
-        className={clsx('absolute object-contain rounded-[0.25rem]', position)}
+        className={clsx('absolute object-contain rounded-[0.25rem] transition-all ', position)}
         src={image.src}
         alt={image.title}
       />
