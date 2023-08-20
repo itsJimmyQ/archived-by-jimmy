@@ -12,7 +12,7 @@ const SPACES = {
   landscape: 2,
   square: 2,
 };
-const TOTAL_COLS = 4;
+const TOTAL_COLS = 6;
 const TOTAL_ROWS = 1;
 
 export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {

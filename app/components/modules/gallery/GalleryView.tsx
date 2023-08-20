@@ -9,7 +9,7 @@ export const GalleryView = () => {
   const { activeImages, nextImages } = useGallery();
 
   return (
-    <div className="w-auto max-w-full flex-grow grid grid-cols-4 grid-rows-1 gap-4 mx-auto aspect-video">
+    <div className="grow grid grid-cols-6 grid-rows-1 gap-10 align-center aspect-video overflow-hidden">
       {activeImages.map((image) => (
         <GalleryImage key={image.title} isActive {...{ image }} />
       ))}

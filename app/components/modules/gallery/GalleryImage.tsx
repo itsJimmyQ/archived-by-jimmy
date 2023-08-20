@@ -19,30 +19,15 @@ const positions = [
 ];
 
 export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
-  let amountColumns;
-  let padding;
+  let amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
   let opacity = isActive ? 'opacity-1' : 'opacity-0';
   let visibility = isActive ? 'visible' : 'hidden';
-  if (image.orientation === 'portrait') amountColumns = `col-span-1`;
-  else {
-    if (image.orientation === 'square') padding = `px-12`;
-
-    amountColumns = `col-span-2`;
-  }
   const position = positions[Math.floor(Math.random() * (positions.length - 1))];
 
   return (
-    <div
-      className={clsx(
-        'w-full h-full relative transition-all',
-        amountColumns,
-        padding,
-        opacity,
-        visibility,
-      )}
-    >
+    <div className={clsx('relative', amountColumns, opacity, visibility)}>
       <img
-        className={clsx('absolute object rounded-md left-0 right-0', position)}
+        className={clsx('absolute object-contain rounded-[0.25rem]', position)}
         src={image.src}
         alt={image.title}
       />
