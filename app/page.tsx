@@ -6,9 +6,9 @@ import { Navigation } from 'modules/navigation';
 
 const HomePage = () => {
   return (
-    <main className="overflow-hidden relative bg-ivory">
-      <Cursor mode="SHUFFLE" />
-      <div className="flex flex-col h-screen min-h-screen max-h-screen overflow-hidden pt-10 px-32">
+    <main className="w-full h-full relative overflow-hidden bg-ivory-100">
+      {/* <Cursor mode="SHUFFLE" /> */}
+      <div className="flex flex-col h-screen min-h-screen max-h-screen overflow-hidden">
         <GalleryView />
         <Navigation />
       </div>

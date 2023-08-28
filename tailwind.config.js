@@ -8,9 +8,11 @@ module.exports = {
   theme: {
     colors: {
       grass: {
-        300: '#2C8141',
+        300: '#30994A',
       },
-      ivory: '#FFFEF9',
+      ivory: {
+        100: '#FBFAF4',
+      },
     },
     extend: {},
   },

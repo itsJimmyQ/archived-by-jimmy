@@ -8,7 +8,7 @@ export const Navigation = () => {
   const [activeItem, setActiveItem] = React.useState<NavigationItem>('WORK');
 
   return (
-    <nav className="w-full flex py-10">
+    <nav className="w-full flex px-32 py-10">
       <ul className="w-full flex justify-between">
         <div className="flex">
           <li>

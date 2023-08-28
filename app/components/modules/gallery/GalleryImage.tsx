@@ -26,15 +26,21 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
     [image.src],
   );
   const zIndex = isActive ? 'z-0' : '-z-1';
+  const userSelect = isActive ? 'select-auto' : 'select-none';
 
   React.useEffect(() => console.log('mounted'), []);
 
   return (
-    <div className={clsx('relative select-none transition-all', amountColumns, zIndex, opacity)}>
+    <div className={clsx('relative transition-all', amountColumns, zIndex, opacity)}>
       <img
-        className={clsx('absolute object-contain rounded-[0.25rem] transition-all ', position)}
+        className={clsx(
+          'absolute object-contain rounded-[0.25rem] transition-all',
+          position,
+          userSelect,
+        )}
         src={image.src}
         alt={image.title}
+        draggable={false}
       />
     </div>
   );
