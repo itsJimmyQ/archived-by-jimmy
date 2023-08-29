@@ -28,8 +28,6 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   const zIndex = isActive ? 'z-0' : '-z-1';
   const userSelect = isActive ? 'select-auto' : 'select-none';
 
-  React.useEffect(() => console.log('mounted'), []);
-
   return (
     <div className={clsx('relative transition-all', amountColumns, zIndex, opacity)}>
       <img

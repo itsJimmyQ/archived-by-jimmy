@@ -7,7 +7,7 @@ import { Navigation } from 'modules/navigation';
 const HomePage = () => {
   return (
     <main className="w-full h-full relative overflow-hidden bg-ivory-100">
-      {/* <Cursor mode="SHUFFLE" /> */}
+      <Cursor mode="SHUFFLE" />
       <div className="flex flex-col h-screen min-h-screen max-h-screen overflow-hidden">
         <GalleryView />
         <Navigation />

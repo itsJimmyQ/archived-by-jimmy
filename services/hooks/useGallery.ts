@@ -1,4 +1,3 @@
-import * as i from 'types';
 import * as React from 'react';
 
 import { GalleryContext } from 'contexts';

@@ -1,8 +1,10 @@
-import { GalleryContextProvider } from 'contexts';
-import './globals.css';
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import clsx from 'clsx';
+
+import { GalleryContextProvider } from 'contexts';
+
+import './globals.css';
 
 const manrope = Manrope({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
