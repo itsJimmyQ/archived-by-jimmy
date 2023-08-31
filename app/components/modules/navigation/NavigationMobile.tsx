@@ -1,16 +1,15 @@
 'use client';
 
-import * as React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import * as React from 'react';
 
-import IconShuffle from 'vectors/shuffle.svg';
-import IconMenu from 'vectors/menu.svg';
 import { IconButton } from 'common/interactions';
+import IconMenu from 'vectors/menu.svg';
+import IconShuffle from 'vectors/shuffle.svg';
 
 export const NavigationMobile = () => {
   const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <nav className="w-full flex gap-2 p-6">
