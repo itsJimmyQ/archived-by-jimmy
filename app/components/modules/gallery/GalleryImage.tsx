@@ -29,7 +29,7 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   const userSelect = isActive ? 'select-auto' : 'select-none';
 
   return (
-    <div className={clsx('relative transition-all', amountColumns, zIndex, opacity)}>
+    <div className={clsx('h-full relative transition-all', amountColumns, zIndex, opacity)}>
       <img
         className={clsx(
           'absolute object-contain rounded-[0.25rem] transition-all',
