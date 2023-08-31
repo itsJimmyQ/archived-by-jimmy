@@ -79,8 +79,6 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
       }
     }
 
-    console.log(remainingImages.length);
-
     return {
       imageGroup: currImageGroup,
       remainingImages,

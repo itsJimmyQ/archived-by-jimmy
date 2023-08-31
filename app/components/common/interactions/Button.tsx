@@ -19,6 +19,7 @@ export const Button = ({ children, isActive, ...props }: ButtonProps) => {
         isActive ? STYLES['active'] : STYLES['default'],
         isActive ? STYLES_HOVER['active'] : STYLES_HOVER['default'],
       )}
+      type="button"
       {...{ ...props }}
     >
       <p className="text-2xl">{children}</p>
