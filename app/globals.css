@@ -19,6 +19,36 @@ body {
   font-family: 'Manrope', sans-serif;
 }
 
+body:before {
+  content: 'sm';
+  display: none;
+  visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  body:before {
+    content: 'md';
+  }
+}
+
+@media (min-width: 1024px) {
+  body:before {
+    content: 'lg';
+  }
+}
+
+@media (min-width: 1280px) {
+  body:before {
+    content: 'xl';
+  }
+}
+
+@media (min-width: 1536px) {
+  body:before {
+    content: '2xl';
+  }
+}
+
 @layer base {
   h1,
   h2,
