@@ -10,7 +10,7 @@ export const NavigationDesktop = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full flex px-32 py-10">
+    <nav className="w-full flex px-32 py-10 bg-ivory-100">
       <ul className="w-full flex justify-between">
         <div className="flex">
           <li>

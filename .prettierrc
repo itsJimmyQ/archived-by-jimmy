@@ -7,7 +7,7 @@
   "importOrder": [
     "^(types|react|react-dom|next(.*))$",
     "<THIRD_PARTY_MODULES>",
-    "^(modules|common|general|vectors|images|services|hooks|queries|styles|config)(/.*|$)",
+    "^(modules|common|general|vectors|images|contexts|services|hooks|queries|styles|config)(/.*|$)",
     "^[./]"
   ],
   "importOrderSeparation": true,

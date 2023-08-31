@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
+
 import clsx from 'clsx';
 
+import { ViewportContainer } from 'common/general';
 import { GalleryContextProvider } from 'contexts';
+import { NavigationDesktop, NavigationMobile } from 'modules/navigation';
 
 import './globals.css';
 
@@ -13,12 +16,29 @@ export const metadata: Metadata = {
   description: '',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en" className="w-screen h-screen">
-      <body className={clsx('w-full h-full', manrope.className)}>
-        <GalleryContextProvider>{children}</GalleryContextProvider>
+    <html lang="en">
+      <body
+        className={clsx(
+          'w-screen h-screen flex flex-col overflow-hidden bg-ivory-100',
+          manrope.className,
+        )}
+      >
+        <GalleryContextProvider>
+          <main className="w-full flex flex-1">{children}</main>
+          <div className="w-full flex items-center">
+            <ViewportContainer.Desktop>
+              <NavigationDesktop />
+            </ViewportContainer.Desktop>
+            <ViewportContainer.Mobile>
+              <NavigationMobile />
+            </ViewportContainer.Mobile>
+          </div>
+        </GalleryContextProvider>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

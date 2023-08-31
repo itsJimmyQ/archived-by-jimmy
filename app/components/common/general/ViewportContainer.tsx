@@ -1,10 +1,12 @@
 export const MobileContainer = ({ children }: ViewportContainerProps) => {
-  return <div className="sm:invisible sm:opacity-0 sm:hidden">{children}</div>;
+  return <div className="w-full sm:invisible sm:opacity-0 sm:hidden">{children}</div>;
 };
 
 export const DesktopContainer = ({ children }: ViewportContainerProps) => {
   return (
-    <div className="invisible opacity-0 hidden sm:visible sm:opacity-100 sm:inline">{children}</div>
+    <div className="w-full invisible opacity-0 hidden sm:visible sm:opacity-100 sm:inline">
+      {children}
+    </div>
   );
 };
 
