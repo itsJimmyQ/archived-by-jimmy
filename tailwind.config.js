@@ -19,6 +19,10 @@ module.exports = {
       },
       white: '#ffffff',
     },
+    fontFamily: {
+      serif: ['Erode', 'sans-serif'],
+      sans: ['General Sans', 'sans-serif'],
+    },
     extend: {},
   },
   plugins: [],

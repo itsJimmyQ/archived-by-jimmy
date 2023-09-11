@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
+import Head from 'next/head';
 
 import clsx from 'clsx';
 
@@ -7,8 +8,6 @@ import { Cursor } from 'common/interactions';
 import { GalleryContextProvider } from 'contexts';
 
 import './globals.css';
-
-const manrope = Manrope({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
 export const metadata: Metadata = {
   title: 'Archived by jimmy',
@@ -18,12 +17,13 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body
-        className={clsx(
-          'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100',
-          manrope.className,
-        )}
-      >
+      {/* <Head>
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=erode@500,600,601&f[]=general-sans@500,400&display=swap"
+          rel="stylesheet"
+        />
+      </Head> */}
+      <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
         <GalleryContextProvider>
           <Cursor />
           <main className="w-full flex flex-1">{children}</main>
