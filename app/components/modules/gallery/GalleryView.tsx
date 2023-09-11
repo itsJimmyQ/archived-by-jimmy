@@ -23,7 +23,7 @@ export const GalleryView = () => {
   const { activeImages, nextImages, isReady } = useGallery();
 
   return (
-    <div className={clsx('w-full h-full overflow-hidden', STYLES_GRID, STYLES_PADDING)}>
+    <div className={clsx('w-full h-full overflow-hidden cursor-none', STYLES_GRID, STYLES_PADDING)}>
       {isReady &&
         activeImages.map((image) => <GalleryImage key={image.src} isActive {...{ image }} />)}
       {isReady && nextImages.map((image) => <GalleryImage key={image.src} {...{ image }} />)}

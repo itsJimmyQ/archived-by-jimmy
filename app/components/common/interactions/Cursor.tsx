@@ -46,16 +46,14 @@ export const Cursor = ({ mode }: CursorProps) => {
       variants={variants}
       initial="initial"
       animate="animate"
-      className={clsx(
-        'group absolute z-10 rounded-full transition-transform ease-out pointer-events-none',
-      )}
+      className={clsx('group absolute z-10 rounded-full transition-transform ease-out cursor-none')}
       style={{
         transform: `translateX(calc(${pos.x}px - 50%)) translateY(calc(${pos.y}px - 50%))`,
       }}
       onClick={mode === 'SHUFFLE' ? onShuffleImages : undefined}
     >
-      <div className="p-10 rounded-full  border-[1px] border-solid border-grass-300 group-active:bg-grass-300 group-active:scale-90 transition-transform">
-        <IconShuffle className="w-[1.5rem] h-[1.5rem] fill-grass-300 group-active:fill-ivory-100" />
+      <div className="p-10 rounded-full bg-grass-100 group-active:bg-grass-200 group-active:scale-90 transition-transform">
+        <IconShuffle className="w-[1.5rem] h-[1.5rem] fill-grass-300" />
       </div>
     </motion.div>
   );
