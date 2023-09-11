@@ -13,7 +13,7 @@ const STYLES_GRID = [
   'grid-rows-1',
   'grid-cols-1',
   'lg:grid-cols-3',
-  'xl:grid-cols-5',
+  'xl:grid-cols-4',
   'gap-10',
 ];
 

@@ -3,7 +3,6 @@
 import * as React from 'react';
 import * as i from 'types';
 
-import { useViewport } from 'hooks/useViewport';
 import { getImages } from 'queries/images';
 import { preloadImage } from 'services/preloadImage';
 
@@ -15,24 +14,16 @@ const SPACES = {
   square: 2,
 };
 
+const AMOUNT_COLUMNS = 4;
+
 export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {
   const [availableImages, setAvailableImages] = React.useState<i.FormattedImage[]>([]);
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
   const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
   const [isReady, setIsReady] = React.useState<boolean>(false);
-  const { viewport, isDetermined: isViewportDetermined } = useViewport();
-
-  let amountColumns = 1;
-  if (viewport === 'lg') {
-    amountColumns = 3;
-  } else if (viewport === 'xl') {
-    amountColumns = 5;
-  }
 
   // Initial setup
   React.useEffect(() => {
-    if (!isViewportDetermined) return;
-
     getImages().then(async (res) => {
       const images = res.results;
       const imageGroups = groupImages(images);
@@ -48,7 +39,7 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
         setIsReady(true);
       });
     });
-  }, [isViewportDetermined]);
+  }, []);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[]) => {
@@ -71,7 +62,7 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
   const formImageGroup = (images: i.FormattedImage[]) => {
     const remainingImages = [...images];
     const currImageGroup: i.FormattedImage[] = [];
-    let remainingSpaces = amountColumns;
+    let remainingSpaces = AMOUNT_COLUMNS;
 
     for (let i = 0; i < remainingImages.length; i++) {
       const currImage = remainingImages[i];

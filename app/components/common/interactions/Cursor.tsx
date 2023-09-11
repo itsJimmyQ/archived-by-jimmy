@@ -1,11 +1,12 @@
 'use client';
 
 import * as React from 'react';
+
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 import { useGallery } from 'hooks';
 import IconShuffle from 'vectors/shuffle.svg';
-import { motion } from 'framer-motion';
 
 const variants = {
   initial: {
@@ -22,12 +23,15 @@ const variants = {
 };
 
 export const Cursor = ({ mode }: CursorProps) => {
+  const refCursor = React.useRef<HTMLDivElement | null>(null);
   const [pos, setPos] = React.useState<Pos | null>(null);
   const { onShuffleImages } = useGallery();
 
   React.useEffect(() => {
     const updatePos = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      requestAnimationFrame(() => {
+        setPos({ x: e.clientX, y: e.clientY });
+      });
     };
 
     window.addEventListener('mousemove', updatePos);
@@ -42,7 +46,9 @@ export const Cursor = ({ mode }: CursorProps) => {
       variants={variants}
       initial="initial"
       animate="animate"
-      className={clsx('group absolute z-10 rounded-full transition-transform ease-out')}
+      className={clsx(
+        'group absolute z-10 rounded-full transition-transform ease-out pointer-events-none',
+      )}
       style={{
         transform: `translateX(calc(${pos.x}px - 50%)) translateY(calc(${pos.y}px - 50%))`,
       }}

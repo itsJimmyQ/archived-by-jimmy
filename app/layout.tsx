@@ -4,6 +4,7 @@ import { Manrope } from 'next/font/google';
 import clsx from 'clsx';
 
 import { ViewportContainer } from 'common/general';
+import { Cursor } from 'common/interactions';
 import { GalleryContextProvider } from 'contexts';
 import { NavigationDesktop, NavigationMobile } from 'modules/navigation';
 
@@ -21,11 +22,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body
         className={clsx(
-          'w-screen h-screen flex flex-col overflow-hidden bg-ivory-100',
+          'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100',
           manrope.className,
         )}
       >
         <GalleryContextProvider>
+          <Cursor />
           <main className="w-full flex flex-1">{children}</main>
           <div className="w-full flex items-center">
             <ViewportContainer.Desktop>
