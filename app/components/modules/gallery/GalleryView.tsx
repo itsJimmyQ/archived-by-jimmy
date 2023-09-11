@@ -8,14 +8,7 @@ import { useGallery } from 'hooks';
 
 import { GalleryImage } from './GalleryImage';
 
-const STYLES_GRID = [
-  'grid',
-  'grid-rows-1',
-  'grid-cols-1',
-  'lg:grid-cols-3',
-  'xl:grid-cols-4',
-  'gap-10',
-];
+const STYLES_GRID = ['grid', 'grid-rows-1', 'grid-cols-1', 'lg:grid-cols-4', 'gap-10'];
 
 const STYLES_PADDING = ['px-6', 'lg:px-20', 'xl:px-32', 'py-0', 'lg:py-4', 'xl:py-6'];
 
