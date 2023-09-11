@@ -53,7 +53,7 @@ body:before {
   h1,
   h2,
   h3 {
-    @apply font-semibold text-ivory-300;
+    @apply font-semibold font-serif text-ivory-300;
   }
 
   h1 {
