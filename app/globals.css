@@ -16,7 +16,7 @@
 
 html,
 body {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'General Sans', sans-serif;
 }
 
 body:before {
@@ -53,7 +53,7 @@ body:before {
   h1,
   h2,
   h3 {
-    @apply font-medium text-grass-300;
+    @apply font-semibold text-ivory-300;
   }
 
   h1 {
@@ -62,5 +62,9 @@ body:before {
 
   h2 {
     @apply text-5xl;
+  }
+
+  p {
+    @apply font-medium text-ivory-300;
   }
 }
