@@ -1,7 +1,8 @@
 'use client';
 
-import * as i from 'types';
 import * as React from 'react';
+import * as i from 'types';
+
 import clsx from 'clsx';
 
 const positions = [
@@ -31,11 +32,7 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   return (
     <div className={clsx('h-full relative transition-all', amountColumns, zIndex, opacity)}>
       <img
-        className={clsx(
-          'absolute object-contain rounded-[0.25rem] transition-all',
-          position,
-          userSelect,
-        )}
+        className={clsx('absolute object-contain rounded-sm transition-all', position, userSelect)}
         src={image.src}
         alt={image.title}
         draggable={false}
