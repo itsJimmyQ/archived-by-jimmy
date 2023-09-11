@@ -3,10 +3,8 @@ import { Manrope } from 'next/font/google';
 
 import clsx from 'clsx';
 
-import { ViewportContainer } from 'common/general';
 import { Cursor } from 'common/interactions';
 import { GalleryContextProvider } from 'contexts';
-import { NavigationDesktop, NavigationMobile } from 'modules/navigation';
 
 import './globals.css';
 
@@ -29,14 +27,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <GalleryContextProvider>
           <Cursor />
           <main className="w-full flex flex-1">{children}</main>
-          <div className="w-full flex items-center">
-            <ViewportContainer.Desktop>
-              <NavigationDesktop />
-            </ViewportContainer.Desktop>
-            <ViewportContainer.Mobile>
-              <NavigationMobile />
-            </ViewportContainer.Mobile>
-          </div>
         </GalleryContextProvider>
       </body>
     </html>
