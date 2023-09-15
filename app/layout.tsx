@@ -21,10 +21,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </Head>
       <GalleryProvider>
-      <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
-        <Header />
-        <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
-      </body>
+        <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
+          <Header />
+          <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
+        </body>
       </GalleryProvider>
     </html>
   );

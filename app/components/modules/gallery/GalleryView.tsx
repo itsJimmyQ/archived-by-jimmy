@@ -5,7 +5,6 @@ import * as React from 'react';
 import clsx from 'clsx';
 
 import { useGallery } from 'hooks';
-import { useCursor } from 'hooks/useCursor';
 
 import { GalleryImage } from './GalleryImage';
 
