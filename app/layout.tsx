@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Head from 'next/head';
 
 import { Header } from 'common/general';
-import { CursorProvider, GalleryProvider } from 'contexts';
+import { GalleryProvider } from 'contexts';
 
 import './globals.css';
 
@@ -21,12 +21,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         />
       </Head>
       <GalleryProvider>
-        <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
-          <CursorProvider>
-            <Header />
-            <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
-          </CursorProvider>
-        </body>
+      <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
+        <Header />
+        <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
+      </body>
       </GalleryProvider>
     </html>
   );
