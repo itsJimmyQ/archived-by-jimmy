@@ -16,7 +16,7 @@ const SPACES = {
 
 const AMOUNT_COLUMNS = 4;
 
-export const GalleryContextProvider = ({ children }: GalleryContextProviderProps) => {
+export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [availableImages, setAvailableImages] = React.useState<i.FormattedImage[]>([]);
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
   const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
@@ -109,7 +109,7 @@ export const GalleryContextProvider = ({ children }: GalleryContextProviderProps
   );
 };
 
-type GalleryContextProviderProps = {
+type GalleryProviderProps = {
   children: React.ReactNode;
 };
 

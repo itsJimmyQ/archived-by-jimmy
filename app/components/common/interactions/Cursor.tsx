@@ -5,9 +5,6 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 
-import { useGallery } from 'hooks';
-import IconShuffle from 'vectors/shuffle.svg';
-
 const variants = {
   initial: {
     opacity: 0,
@@ -22,23 +19,7 @@ const variants = {
   },
 };
 
-export const Cursor = ({ mode }: CursorProps) => {
-  const refCursor = React.useRef<HTMLDivElement | null>(null);
-  const [pos, setPos] = React.useState<Pos | null>(null);
-  const { onShuffleImages } = useGallery();
-
-  React.useEffect(() => {
-    const updatePos = (e: MouseEvent) => {
-      requestAnimationFrame(() => {
-        setPos({ x: e.clientX, y: e.clientY });
-      });
-    };
-
-    window.addEventListener('mousemove', updatePos);
-
-    return () => window.removeEventListener('mousemove', updatePos);
-  }, []);
-
+export const Cursor = ({ children, pos, onClick }: CursorProps) => {
   if (!pos) return null;
 
   return (
@@ -46,24 +27,28 @@ export const Cursor = ({ mode }: CursorProps) => {
       variants={variants}
       initial="initial"
       animate="animate"
-      className={clsx('group absolute z-10 rounded-full transition-transform ease-out cursor-none')}
+      className={clsx(
+        'group absolute z-10 rounded-full transition-transform ease-out select-none cursor-none',
+      )}
       style={{
         transform: `translateX(calc(${pos.x}px - 50%)) translateY(calc(${pos.y}px - 50%))`,
       }}
-      onClick={mode === 'SHUFFLE' ? onShuffleImages : undefined}
+      {...(onClick && { onClick })}
     >
       <div className="p-10 rounded-full bg-grass-100 group-active:bg-grass-200 group-active:scale-90 transition-transform">
-        <IconShuffle className="w-[1.5rem] h-[1.5rem] fill-grass-300" />
+        {children}
       </div>
     </motion.div>
   );
 };
 
 type CursorProps = {
-  mode?: 'SHUFFLE';
+  children?: React.ReactNode;
+  pos: CursorPosition | null;
+  onClick?: () => void;
 };
 
-type Pos = {
+export type CursorPosition = {
   x: number;
   y: number;
 };

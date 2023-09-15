@@ -3,11 +3,7 @@
 import { GalleryView } from 'modules/gallery';
 
 const HomePage = () => {
-  return (
-    <div className="w-full h-full relative">
-      <GalleryView />
-    </div>
-  );
+  return <GalleryView />;
 };
 
 export default HomePage;
