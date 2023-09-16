@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import * as React from 'react';
 import * as i from 'types';
 
@@ -19,23 +20,43 @@ const positions = [
   ['top-[100%]', '-translate-y-[100%]'],
 ];
 
+const STYLES_IMAGE = {
+  active: ['opacity-1', 'z-0', 'select-auto'],
+  inactive: ['opacity-0', 'z-[-1]', 'select-none'],
+};
+
 export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
-  let amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
-  let opacity = isActive ? 'opacity-1' : 'opacity-0';
-  const position = React.useMemo(
-    () => positions[Math.floor(Math.random() * (positions.length - 1))],
-    [image.src],
-  );
-  const zIndex = isActive ? 'z-0' : '-z-1';
-  const userSelect = isActive ? 'select-auto' : 'select-none';
+  const amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
+  let aspectRatio: string | undefined;
+  switch (image.orientation) {
+    case 'portrait':
+      aspectRatio = 'aspect-[10/16]';
+      break;
+    case 'landscape':
+      aspectRatio = 'aspect-[16/10]';
+      break;
+    case 'square':
+      aspectRatio = 'aspect-square';
+      break;
+    default:
+      aspectRatio = undefined;
+  }
 
   return (
-    <div className={clsx('h-full relative transition-all', amountColumns, zIndex, opacity)}>
-      <img
-        className={clsx('absolute object-contain rounded-sm transition-all', position, userSelect)}
-        src={image.src}
+    <div
+      className={clsx(
+        'relative transition-all',
+        isActive ? STYLES_IMAGE['active'] : STYLES_IMAGE['inactive'],
+        amountColumns,
+        aspectRatio,
+      )}
+    >
+      <Image
+        src={`https:${image.src}`}
         alt={image.title}
-        draggable={false}
+        fill={true}
+        objectFit="cover"
+        priority={isActive}
       />
     </div>
   );

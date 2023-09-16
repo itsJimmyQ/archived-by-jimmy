@@ -18,7 +18,7 @@ export const useViewport = () => {
     };
   }, []);
 
-  const getViewport = function () {
+  const getViewport = () => {
     return window.getComputedStyle(document.body, ':before').content.replace(/\"/g, '') as Viewport;
   };
 

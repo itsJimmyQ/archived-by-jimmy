@@ -46,6 +46,14 @@ const config = (phase, config) => {
         },
       ];
     },
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'images.ctfassets.net',
+        },
+      ],
+    },
   };
 
   /**

@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import Head from 'next/head';
 
 import { Header } from 'common/general';
-import { GalleryProvider } from 'contexts';
 
+import { Providers } from './components/Providers';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Archived by jimmy',
+  title: 'archived by jimmy',
   description: '',
 };
 
@@ -20,12 +20,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           rel="stylesheet"
         />
       </Head>
-      <GalleryProvider>
+      <Providers>
         <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
           <Header />
           <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
         </body>
-      </GalleryProvider>
+      </Providers>
     </html>
   );
 };

@@ -1,7 +1,6 @@
 'use client';
 
 import { Logo } from './Logo';
-import { MenuButton } from './MenuButton';
 
 export const Header = () => {
   return (
