@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import * as React from 'react';
 import * as i from 'types';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 const positions = [
   ['top-[0%]', '-translate-y-[0%]'],
@@ -25,7 +25,18 @@ const STYLES_IMAGE = {
   inactive: ['opacity-0', 'z-[-1]', 'select-none'],
 };
 
+const VARIANTS_IMAGE = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+  },
+};
+
 export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
+  const [isPainted, setIsPainted] = React.useState(false);
+
   const amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
   let aspectRatio: string | undefined;
   switch (image.orientation) {
@@ -44,18 +55,16 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
 
   return (
     <div
-      className={clsx(
-        'relative transition-all overflow-hidden',
-        isActive ? STYLES_IMAGE['active'] : STYLES_IMAGE['inactive'],
-        amountColumns,
-        aspectRatio,
-      )}
+      className={clsx(isActive ? STYLES_IMAGE['active'] : STYLES_IMAGE['inactive'], amountColumns)}
     >
-      <img
-        className="object-cover"
+      <motion.img
+        initial="hidden"
+        animate={isPainted ? 'visible' : 'hidden'}
+        variants={VARIANTS_IMAGE}
+        key={image.src}
         src={image.src}
         alt={image.title}
-        fetchPriority={isActive ? 'high' : 'low'}
+        onLoad={() => setIsPainted(true)}
       />
     </div>
   );

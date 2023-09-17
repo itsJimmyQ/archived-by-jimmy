@@ -1,5 +1,3 @@
-import * as i from 'types';
-
 import { IncomingMessagePayload, OutgoingMessagePayload } from './types';
 
 self.addEventListener('message', async (event) => {

@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
+import { AnimatePresence } from 'framer-motion';
 
 import { Button } from 'common/interactions';
 import { useGallery } from 'hooks';
@@ -23,7 +24,7 @@ export const GalleryView = () => {
 
   return (
     <>
-      <div className={clsx('w-full h-full overflow-hidden', CLASSNAME_GRID)}>
+      <div className={clsx('w-full h-full overflow-hidden place-items-start', CLASSNAME_GRID)}>
         {isReady &&
           activeImages.map((image) => <GalleryImage key={image.src} isActive {...{ image }} />)}
       </div>
