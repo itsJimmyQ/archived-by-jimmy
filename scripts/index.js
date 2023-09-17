@@ -19,10 +19,10 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
     const { items: existingEntries } = await environment.getEntries({
       content_type: 'image',
     });
+
     const mediaAssets = await environment.getAssets().then((assets) => {
       return assets.items;
     });
-    let amountNewEntriesCreated = 0;
 
     console.info(`${mediaAssets.length} assets found.`);
 
@@ -37,33 +37,35 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
       );
 
       if (!isAssetAlreadyInEntries) {
-        setTimeout(() => {
-          environment
-            .createEntry('image', {
-              fields: {
-                title: {
-                  [LOCALE]: uuidv4(),
-                },
-                asset: {
-                  [LOCALE]: {
-                    sys: {
-                      type: 'Link',
-                      linkType: 'Asset',
-                      id: assetId,
+        setTimeout(
+          () =>
+            environment
+              .createEntry('image', {
+                fields: {
+                  title: {
+                    [LOCALE]: uuidv4(),
+                  },
+                  asset: {
+                    [LOCALE]: {
+                      sys: {
+                        type: 'Link',
+                        linkType: 'Asset',
+                        id: assetId,
+                      },
                     },
                   },
+                  orientation: {
+                    [LOCALE]: orientation,
+                  },
                 },
-                orientation: {
-                  [LOCALE]: orientation,
-                },
-              },
-            })
-            .then(() => (amountNewEntriesCreated += 1));
-        }, 100);
+              })
+              .then((entry) => {
+                entry.publish();
+              }),
+          100,
+        );
       }
     });
-
-    console.info(`Created ${amountNewEntriesCreated} new entries.`);
   });
 });
 
