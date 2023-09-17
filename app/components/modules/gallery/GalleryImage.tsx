@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import * as React from 'react';
 import * as i from 'types';
 
@@ -20,21 +21,21 @@ const positions = [
   ['top-[100%]', '-translate-y-[100%]'],
 ];
 
-const STYLES_IMAGE = {
-  active: ['opacity-1', 'z-0', 'select-auto'],
-  inactive: ['opacity-0', 'z-[-1]', 'select-none'],
-};
-
 const VARIANTS_IMAGE = {
   hidden: {
     opacity: 0,
+    y: 0,
   },
   visible: {
     opacity: 1,
+    transiton: {
+      duration: 0.4,
+      ease: 'easeInOut',
+    },
   },
 };
 
-export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
+export const GalleryImage = ({ image }: GalleryImageProps) => {
   const [isPainted, setIsPainted] = React.useState(false);
 
   const amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
@@ -54,23 +55,27 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   }
 
   return (
-    <div
-      className={clsx(isActive ? STYLES_IMAGE['active'] : STYLES_IMAGE['inactive'], amountColumns)}
+    <motion.div
+      initial="hidden"
+      animate={isPainted ? 'visible' : 'hidden'}
+      exit="hidden"
+      variants={VARIANTS_IMAGE}
+      key={image.src}
+      className={clsx('w-full relative', amountColumns, aspectRatio)}
     >
-      <motion.img
-        initial="hidden"
-        animate={isPainted ? 'visible' : 'hidden'}
-        variants={VARIANTS_IMAGE}
+      <Image
+        className="object-cover object-center"
         key={image.src}
         src={image.src}
         alt={image.title}
+        layout="fill"
+        // Detect when the image is painted instead of loaded to DOM
         onLoad={() => setIsPainted(true)}
       />
-    </div>
+    </motion.div>
   );
 };
 
 type GalleryImageProps = {
   image: i.FormattedImage;
-  isActive?: boolean;
 };
