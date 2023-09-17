@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import clsx from 'clsx';
 
+import { Button } from 'common/interactions';
 import { useGallery } from 'hooks';
 
 import { GalleryImage } from './GalleryImage';
@@ -18,7 +19,7 @@ const CLASSNAME_GRID = [
 ];
 
 export const GalleryView = () => {
-  const { activeImages, nextImages, isReady, onShuffleImages } = useGallery();
+  const { activeImages, isReady, onShuffleImages } = useGallery();
 
   return (
     <>
@@ -26,6 +27,9 @@ export const GalleryView = () => {
         {isReady &&
           activeImages.map((image) => <GalleryImage key={image.src} isActive {...{ image }} />)}
       </div>
+      <Button className="fixed top-[80%] left-[50%]" onClick={onShuffleImages}>
+        Shuffle
+      </Button>
     </>
   );
 };

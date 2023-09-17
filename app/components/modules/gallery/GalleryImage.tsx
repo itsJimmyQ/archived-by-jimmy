@@ -45,18 +45,17 @@ export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
   return (
     <div
       className={clsx(
-        'relative transition-all',
+        'relative transition-all overflow-hidden',
         isActive ? STYLES_IMAGE['active'] : STYLES_IMAGE['inactive'],
         amountColumns,
         aspectRatio,
       )}
     >
-      <Image
-        src={`https:${image.src}`}
+      <img
+        className="object-cover"
+        src={image.src}
         alt={image.title}
-        fill={true}
-        objectFit="cover"
-        priority={isActive}
+        fetchPriority={isActive ? 'high' : 'low'}
       />
     </div>
   );
