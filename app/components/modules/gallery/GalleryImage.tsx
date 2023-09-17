@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import * as React from 'react';
 import * as i from 'types';
 
@@ -24,13 +23,23 @@ const positions = [
 const VARIANTS_IMAGE = {
   hidden: {
     opacity: 0,
-    y: 0,
+    transition: {
+      duration: 0.1,
+      ease: 'linear',
+    },
   },
   visible: {
     opacity: 1,
     transiton: {
-      duration: 0.4,
-      ease: 'easeInOut',
+      duration: 0.1,
+      ease: 'linear',
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+      ease: 'linear',
     },
   },
 };
@@ -53,22 +62,20 @@ export const GalleryImage = ({ image }: GalleryImageProps) => {
     default:
       aspectRatio = undefined;
   }
+  const position = positions[Math.floor(Math.random() * positions.length)];
 
   return (
     <motion.div
       initial="hidden"
       animate={isPainted ? 'visible' : 'hidden'}
-      exit="hidden"
+      exit="exit"
       variants={VARIANTS_IMAGE}
-      key={image.src}
-      className={clsx('w-full relative', amountColumns, aspectRatio)}
+      className={clsx('w-full relative rounded-sm', amountColumns, aspectRatio, position)}
     >
-      <Image
-        className="object-cover object-center"
-        key={image.src}
+      <img
+        className="w-full h-full object-cover object-center rounded-sm"
         src={image.src}
         alt={image.title}
-        layout="fill"
         // Detect when the image is painted instead of loaded to DOM
         onLoad={() => setIsPainted(true)}
       />

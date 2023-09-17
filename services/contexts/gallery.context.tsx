@@ -30,6 +30,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       break;
     case 'md':
     case 'lg':
+    case 'xl':
       amountColumns = 3;
       spaces = {
         portrait: 1,
@@ -37,7 +38,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
         square: 2,
       };
       break;
-    case 'xl':
+    case '2xl':
     default:
       amountColumns = 5;
       spaces = {

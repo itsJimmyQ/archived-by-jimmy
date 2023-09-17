@@ -15,7 +15,7 @@ const CLASSNAME_GRID = [
   'grid-rows-1',
   'grid-cols-1',
   'md:grid-cols-3',
-  'xl:grid-cols-5',
+  '2xl:grid-cols-5',
   'gap-10',
 ];
 
@@ -28,14 +28,16 @@ export const GalleryView = () => {
     <>
       <div
         className={clsx(
-          'w-full h-full overflow-hidden place-items-center',
+          'w-full h-full overflow-hidden place-items-top',
           CLASSNAME_GRID,
           CLASSNAME_PADDING,
         )}
       >
-        {isReady && activeImages.map((image) => <GalleryImage key={image.src} {...{ image }} />)}
+        <AnimatePresence mode="wait">
+          {isReady && activeImages.map((image) => <GalleryImage key={image.src} {...{ image }} />)}
+        </AnimatePresence>
       </div>
-      <Button className="fixed top-[80%] left-[50%]" onClick={onShuffleImages}>
+      <Button className="fixed top-[80%] left-[50%] translate-x-[-50%]" onClick={onShuffleImages}>
         Shuffle
       </Button>
     </>
