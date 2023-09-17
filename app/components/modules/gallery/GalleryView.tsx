@@ -19,12 +19,20 @@ const CLASSNAME_GRID = [
   'gap-10',
 ];
 
+const CLASSNAME_PADDING = ['py-6', 'md:py-10'];
+
 export const GalleryView = () => {
   const { activeImages, isReady, onShuffleImages } = useGallery();
 
   return (
     <>
-      <div className={clsx('w-full h-full overflow-hidden place-items-start', CLASSNAME_GRID)}>
+      <div
+        className={clsx(
+          'w-full h-full overflow-hidden place-items-center',
+          CLASSNAME_GRID,
+          CLASSNAME_PADDING,
+        )}
+      >
         {isReady && activeImages.map((image) => <GalleryImage key={image.src} {...{ image }} />)}
       </div>
       <Button className="fixed top-[80%] left-[50%]" onClick={onShuffleImages}>
