@@ -20,31 +20,7 @@ const positions = [
   ['top-[100%]', '-translate-y-[100%]'],
 ];
 
-const VARIANTS_IMAGE = {
-  hidden: {
-    opacity: 0,
-    transition: {
-      duration: 0.1,
-      ease: 'linear',
-    },
-  },
-  visible: {
-    opacity: 1,
-    transiton: {
-      duration: 0.1,
-      ease: 'linear',
-    },
-  },
-  exit: {
-    opacity: 0,
-    transition: {
-      duration: 0.1,
-      ease: 'linear',
-    },
-  },
-};
-
-export const GalleryImage = ({ image }: GalleryImageProps) => {
+export const GalleryImage = ({ image, index }: GalleryImageProps) => {
   const [isPainted, setIsPainted] = React.useState(false);
 
   const amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
@@ -63,6 +39,26 @@ export const GalleryImage = ({ image }: GalleryImageProps) => {
       aspectRatio = undefined;
   }
   const position = positions[Math.floor(Math.random() * positions.length)];
+  const VARIANTS_IMAGE = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.2,
+        delay: index * 0.2,
+        ease: 'easeOut',
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.2,
+        ease: 'easeIn',
+      },
+    },
+  };
 
   return (
     <motion.div
@@ -85,4 +81,5 @@ export const GalleryImage = ({ image }: GalleryImageProps) => {
 
 type GalleryImageProps = {
   image: i.FormattedImage;
+  index: number;
 };

@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { Button } from 'common/interactions';
 import { useGallery } from 'hooks';
@@ -34,7 +34,10 @@ export const GalleryView = () => {
         )}
       >
         <AnimatePresence mode="wait">
-          {isReady && activeImages.map((image) => <GalleryImage key={image.src} {...{ image }} />)}
+          {isReady &&
+            activeImages.map((image, index) => (
+              <GalleryImage key={image.src} {...{ image, index }} />
+            ))}
         </AnimatePresence>
       </div>
       <Button className="fixed top-[80%] left-[50%] translate-x-[-50%]" onClick={onShuffleImages}>
