@@ -23,11 +23,11 @@ const positions = [
 export const GalleryImage = ({ image, index }: GalleryImageProps) => {
   const [isPainted, setIsPainted] = React.useState(false);
 
-  const amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
+  const amountColumns = image.orientation === 'portrait' ? 'col-span-4' : 'col-span-4';
   let aspectRatio: string | undefined;
   switch (image.orientation) {
     case 'portrait':
-      aspectRatio = 'aspect-[10/16]';
+      aspectRatio = 'aspect-[12/16]';
       break;
     case 'landscape':
       aspectRatio = 'aspect-[16/10]';
@@ -46,8 +46,8 @@ export const GalleryImage = ({ image, index }: GalleryImageProps) => {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.2,
-        delay: index * 0.2,
+        duration: 0.6,
+        delay: index * 0.1,
         ease: 'easeOut',
       },
     },

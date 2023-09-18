@@ -31,20 +31,20 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
     case 'md':
     case 'lg':
     case 'xl':
-      amountColumns = 3;
+      amountColumns = 8;
       spaces = {
-        portrait: 1,
-        landscape: 2,
-        square: 2,
+        portrait: 4,
+        landscape: 4,
+        square: 4,
       };
       break;
     case '2xl':
     default:
-      amountColumns = 5;
+      amountColumns = 12;
       spaces = {
-        portrait: 1,
-        landscape: 2,
-        square: 2,
+        portrait: 4,
+        landscape: 4,
+        square: 4,
       };
   }
 

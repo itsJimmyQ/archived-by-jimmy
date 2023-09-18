@@ -14,8 +14,8 @@ const CLASSNAME_GRID = [
   'grid',
   'grid-rows-1',
   'grid-cols-1',
-  'md:grid-cols-3',
-  '2xl:grid-cols-5',
+  'md:grid-cols-8',
+  '2xl:grid-cols-12',
   'gap-10',
 ];
 
