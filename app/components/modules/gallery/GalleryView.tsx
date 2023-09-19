@@ -14,8 +14,8 @@ const CLASSNAME_GRID = [
   'grid',
   'grid-rows-1',
   'grid-cols-1',
-  'md:grid-cols-8',
-  '2xl:grid-cols-12',
+  'md:grid-cols-4',
+  'xl:grid-cols-6',
   'gap-10',
 ];
 
@@ -28,7 +28,7 @@ export const GalleryView = () => {
     <>
       <div
         className={clsx(
-          'w-full h-full overflow-hidden place-items-top',
+          'w-full h-full overflow-hidden place-items-center',
           CLASSNAME_GRID,
           CLASSNAME_PADDING,
         )}

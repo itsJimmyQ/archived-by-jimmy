@@ -27,24 +27,26 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
         landscape: 1,
         square: 1,
       };
+
       break;
     case 'md':
     case 'lg':
-    case 'xl':
-      amountColumns = 8;
+      amountColumns = 4;
       spaces = {
-        portrait: 4,
-        landscape: 4,
-        square: 4,
+        portrait: 2,
+        landscape: 2,
+        square: 2,
       };
+
       break;
+    case 'xl':
     case '2xl':
     default:
-      amountColumns = 12;
+      amountColumns = 6;
       spaces = {
-        portrait: 4,
-        landscape: 4,
-        square: 4,
+        portrait: 2,
+        landscape: 2,
+        square: 2,
       };
   }
 
