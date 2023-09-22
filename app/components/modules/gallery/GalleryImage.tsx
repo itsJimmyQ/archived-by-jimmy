@@ -28,20 +28,17 @@ export const GalleryImage = ({ image, index }: GalleryImageProps) => {
   const VARIANTS_IMAGE = {
     hidden: {
       opacity: 0,
-      y: 8,
     },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.4,
+        duration: 0.2,
         delay: index * 0.1,
         ease: 'linear',
       },
     },
     exit: {
       opacity: 0,
-      y: -16,
       transition: {
         duration: 0.2,
         ease: 'linear',
