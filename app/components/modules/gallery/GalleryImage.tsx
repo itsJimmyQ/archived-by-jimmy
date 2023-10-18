@@ -9,22 +9,6 @@ import { motion } from 'framer-motion';
 export const GalleryImage = ({ image, index }: GalleryImageProps) => {
   const [isPainted, setIsPainted] = React.useState(false);
 
-  const amountColumns = 'col-span-2';
-  let aspectRatio: string | undefined;
-  switch (image.orientation) {
-    case 'portrait':
-      aspectRatio = 'aspect-[12/16]';
-      break;
-    case 'landscape':
-      aspectRatio = 'aspect-[16/10]';
-      break;
-    case 'square':
-      aspectRatio = 'aspect-square';
-
-      break;
-    default:
-      aspectRatio = undefined;
-  }
   const VARIANTS_IMAGE = {
     hidden: {
       opacity: 0,
@@ -52,7 +36,11 @@ export const GalleryImage = ({ image, index }: GalleryImageProps) => {
       animate={isPainted ? 'visible' : 'hidden'}
       exit="exit"
       variants={VARIANTS_IMAGE}
-      className={clsx('w-full relative rounded-sm', amountColumns, aspectRatio)}
+      className={clsx('w-full relative rounded-sm col-span-2', {
+        'aspect-[12/16]': image.orientation === 'portrait',
+        'aspect-[16/12]': image.orientation === 'landscape',
+        'aspect-square': image.orientation === 'square',
+      })}
     >
       <img
         className="w-full h-full object-cover object-center rounded-sm"

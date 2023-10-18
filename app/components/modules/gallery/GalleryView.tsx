@@ -3,23 +3,12 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 import { Button } from 'common/interactions';
 import { useGallery } from 'hooks';
 
 import { GalleryImage } from './GalleryImage';
-
-const CLASSNAME_GRID = [
-  'grid',
-  'grid-rows-1',
-  'grid-cols-1',
-  'md:grid-cols-4',
-  'xl:grid-cols-6',
-  'gap-10',
-];
-
-const CLASSNAME_PADDING = ['py-6', 'md:py-10'];
 
 export const GalleryView = () => {
   const { activeImages, isReady, onShuffleImages } = useGallery();
@@ -28,9 +17,8 @@ export const GalleryView = () => {
     <>
       <div
         className={clsx(
-          'w-full h-full overflow-hidden place-items-center',
-          CLASSNAME_GRID,
-          CLASSNAME_PADDING,
+          'w-full h-full overflow-hidden py-6 md:py-10',
+          'grid grid-rows-1 grid-cols-1 md:grid-cols-4 xl:grid-cols-6 place-items-center gap-10',
         )}
       >
         <AnimatePresence mode="wait">
