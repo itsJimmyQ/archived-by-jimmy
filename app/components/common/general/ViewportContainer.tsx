@@ -1,3 +1,5 @@
+'use client';
+
 export const MobileContainer = ({ children }: ViewportContainerProps) => {
   return <div className="w-full sm:invisible sm:opacity-0 sm:hidden">{children}</div>;
 };

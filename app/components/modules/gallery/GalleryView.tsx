@@ -5,13 +5,19 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { AnimatePresence } from 'framer-motion';
 
-import { Button } from 'common/interactions';
-import { useGallery } from 'hooks';
+import { useCursor, useGallery } from 'hooks';
 
 import { GalleryImage } from './GalleryImage';
 
 export const GalleryView = () => {
   const { activeImages, isReady, onShuffleImages } = useGallery();
+  const { setCursorMode } = useCursor();
+
+  React.useEffect(() => {
+    if (!isReady) return;
+
+    setCursorMode('SHUFFLE');
+  }, [isReady]);
 
   return (
     <>
@@ -20,17 +26,17 @@ export const GalleryView = () => {
           'w-full h-full overflow-hidden py-6 md:py-10',
           'grid grid-rows-1 grid-cols-1 md:grid-cols-4 xl:grid-cols-6 place-items-center gap-10',
         )}
+        onClick={onShuffleImages}
       >
         <AnimatePresence mode="wait">
-          {isReady &&
-            activeImages.map((image, index) => (
-              <GalleryImage key={image.src} {...{ image, index }} />
-            ))}
+          <>
+            {isReady &&
+              activeImages.map((image, index) => (
+                <GalleryImage key={image.src} {...{ image, index }} />
+              ))}
+          </>
         </AnimatePresence>
       </div>
-      <Button className="fixed top-[80%] left-[50%] translate-x-[-50%]" onClick={onShuffleImages}>
-        Shuffle
-      </Button>
     </>
   );
 };

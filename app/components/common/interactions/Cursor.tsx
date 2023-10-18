@@ -19,7 +19,7 @@ const variants = {
   },
 };
 
-export const Cursor = ({ children, pos, onClick }: CursorProps) => {
+export const Cursor = ({ children, pos }: CursorProps) => {
   if (!pos) return null;
 
   return (
@@ -28,16 +28,13 @@ export const Cursor = ({ children, pos, onClick }: CursorProps) => {
       initial="initial"
       animate="animate"
       className={clsx(
-        'group absolute z-10 rounded-full transition-transform ease-out select-none cursor-none',
+        'group absolute z-10 p-4 rounded-full bg-grass-100 transition-transform ease-out select-none pointer-events-none',
       )}
       style={{
         transform: `translateX(calc(${pos.x}px - 50%)) translateY(calc(${pos.y}px - 50%))`,
       }}
-      {...(onClick && { onClick })}
     >
-      <div className="p-10 rounded-full bg-grass-100 group-active:bg-grass-200 group-active:scale-90 transition-transform">
-        {children}
-      </div>
+      {children}
     </motion.div>
   );
 };
@@ -45,7 +42,6 @@ export const Cursor = ({ children, pos, onClick }: CursorProps) => {
 type CursorProps = {
   children?: React.ReactNode;
   pos: CursorPosition | null;
-  onClick?: () => void;
 };
 
 export type CursorPosition = {
