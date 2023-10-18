@@ -19,7 +19,7 @@ const variants = {
   },
 };
 
-export const Cursor = ({ children, pos, onClick }: CursorProps) => {
+export const Cursor = ({ children, pos }: CursorProps) => {
   if (!pos) return null;
 
   return (
@@ -33,7 +33,6 @@ export const Cursor = ({ children, pos, onClick }: CursorProps) => {
       style={{
         transform: `translateX(calc(${pos.x}px - 50%)) translateY(calc(${pos.y}px - 50%))`,
       }}
-      {...(onClick && { onClick })}
     >
       {children}
     </motion.div>
@@ -43,7 +42,6 @@ export const Cursor = ({ children, pos, onClick }: CursorProps) => {
 type CursorProps = {
   children?: React.ReactNode;
   pos: CursorPosition | null;
-  onClick: (() => void) | null;
 };
 
 export type CursorPosition = {

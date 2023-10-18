@@ -13,12 +13,6 @@ export const GalleryView = () => {
   const { activeImages, isReady } = useGallery();
   const { setCursorMode } = useCursor();
 
-  React.useEffect(() => {
-    if (!isReady) return;
-
-    setCursorMode('SHUFFLE');
-  }, [isReady]);
-
   return (
     <>
       <div

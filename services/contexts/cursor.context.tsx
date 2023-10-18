@@ -3,15 +3,11 @@
 import * as React from 'react';
 
 import { Cursor, CursorPosition } from 'common/interactions';
-import { useGallery } from 'hooks';
-import IconShuffle from 'vectors/shuffle.svg';
 
 export const CursorContext = React.createContext<CursorContext | null>(null);
 
 export const CursorProvider = ({ children }: CursorProviderProps) => {
   const [pos, setPos] = React.useState<CursorPosition | null>(null);
-  const [mode, setMode] = React.useState<CursorMode>('SHUFFLE');
-  const { onShuffleImages } = useGallery();
 
   React.useEffect(() => {
     const updatePos = (e: MouseEvent) => {
@@ -25,23 +21,8 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
     return () => window.removeEventListener('mousemove', updatePos);
   }, []);
 
-  const cursorModeConfigs = {
-    DEFAULT: {
-      children: null,
-      onClick: null,
-    },
-    SHUFFLE: {
-      children: <IconShuffle className="w-6 h-6 fill-grass-300" />,
-      onClick: onShuffleImages,
-    },
-  };
-  const currCursorConfig = cursorModeConfigs[mode];
-
   return (
-    <CursorContext.Provider value={{ setCursorMode: setMode }}>
-      <Cursor onClick={currCursorConfig.onClick} {...{ pos }}>
-        {currCursorConfig.children}
-      </Cursor>
+    <CursorContext.Provider value={{ setCursorMode: () => null }}>
       {children}
     </CursorContext.Provider>
   );

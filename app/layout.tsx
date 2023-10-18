@@ -22,7 +22,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
         <Providers>
           <Header />
-          <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32 cursor-none">{children}</main>
+          <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
         </Providers>
       </body>
     </html>
