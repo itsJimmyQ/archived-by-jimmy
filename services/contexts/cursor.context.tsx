@@ -34,11 +34,12 @@ export const CursorProvider = ({ children }: CursorProviderProps) => {
       onClick: onShuffleImages,
     },
   };
+  const currCursorConfig = cursorModeConfigs[mode];
 
   return (
     <CursorContext.Provider value={{ setCursorMode: setMode }}>
-      <Cursor onClick={cursorModeConfigs[mode].onClick} {...{ pos }}>
-        {cursorModeConfigs[mode].children}
+      <Cursor onClick={currCursorConfig.onClick} {...{ pos }}>
+        {currCursorConfig.children}
       </Cursor>
       {children}
     </CursorContext.Provider>

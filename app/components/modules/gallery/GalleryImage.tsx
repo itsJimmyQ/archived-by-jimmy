@@ -1,68 +1,59 @@
 'use client';
 
-import Image from 'next/image';
 import * as React from 'react';
 import * as i from 'types';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
-const positions = [
-  ['top-[0%]', '-translate-y-[0%]'],
-  ['top-[10%]', '-translate-y-[10%]'],
-  ['top-[20%]', '-translate-y-[20%]'],
-  ['top-[30%]', '-translate-y-[30%]'],
-  ['top-[40%]', '-translate-y-[40%]'],
-  ['top-[50%]', '-translate-y-[50%]'],
-  ['top-[60%]', '-translate-y-[60%]'],
-  ['top-[70%]', '-translate-y-[70%]'],
-  ['top-[80%]', '-translate-y-[80%]'],
-  ['top-[90%]', '-translate-y-[90%]'],
-  ['top-[100%]', '-translate-y-[100%]'],
-];
+export const GalleryImage = ({ image, index }: GalleryImageProps) => {
+  const [isPainted, setIsPainted] = React.useState(false);
 
-const STYLES_IMAGE = {
-  active: ['opacity-1', 'z-0', 'select-auto'],
-  inactive: ['opacity-0', 'z-[-1]', 'select-none'],
-};
-
-export const GalleryImage = ({ image, isActive }: GalleryImageProps) => {
-  const amountColumns = image.orientation === 'portrait' ? 'col-span-1' : 'col-span-2';
-  let aspectRatio: string | undefined;
-  switch (image.orientation) {
-    case 'portrait':
-      aspectRatio = 'aspect-[10/16]';
-      break;
-    case 'landscape':
-      aspectRatio = 'aspect-[16/10]';
-      break;
-    case 'square':
-      aspectRatio = 'aspect-square';
-      break;
-    default:
-      aspectRatio = undefined;
-  }
+  const VARIANTS_IMAGE = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.2,
+        delay: index * 0.1,
+        ease: 'linear',
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.2,
+        ease: 'linear',
+      },
+    },
+  };
 
   return (
-    <div
-      className={clsx(
-        'relative transition-all',
-        isActive ? STYLES_IMAGE['active'] : STYLES_IMAGE['inactive'],
-        amountColumns,
-        aspectRatio,
-      )}
+    <motion.div
+      initial="hidden"
+      animate={isPainted ? 'visible' : 'hidden'}
+      exit="exit"
+      variants={VARIANTS_IMAGE}
+      className={clsx('w-full relative rounded-sm col-span-2', {
+        'aspect-[12/16]': image.orientation === 'portrait',
+        'aspect-[16/12]': image.orientation === 'landscape',
+        'aspect-square': image.orientation === 'square',
+      })}
     >
-      <Image
-        src={`https:${image.src}`}
+      <img
+        className="w-full h-full object-cover object-center rounded-sm"
+        src={image.src}
         alt={image.title}
-        fill={true}
-        objectFit="cover"
-        priority={isActive}
+        // Detect when the image is painted instead of loaded to DOM
+        onLoad={() => setIsPainted(true)}
       />
-    </div>
+    </motion.div>
   );
 };
 
 type GalleryImageProps = {
   image: i.FormattedImage;
-  isActive?: boolean;
+  index: number;
 };
