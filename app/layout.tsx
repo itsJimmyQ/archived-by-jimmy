@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Head from 'next/head';
 
+import clsx from 'clsx';
+
 import { Header, Providers } from 'common/general';
 
 import './globals.css';
@@ -19,10 +21,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           rel="stylesheet"
         />
       </Head>
-      <body className={'w-screen h-screen flex flex-col relative overflow-hidden bg-ivory-100'}>
+      <body
+        className={clsx(
+          'w-screen h-[100dvh] flex flex-col relative overflow-hidden bg-ivory-100',
+          'px-4 tablet:px-6 desktop:px-12 large:px-32',
+        )}
+      >
         <Providers>
           <Header />
-          <main className="w-full flex flex-1 px-6 lg:px-20 xl:px-32">{children}</main>
+          <main className="w-full flex flex-1">{children}</main>
         </Providers>
       </body>
     </html>

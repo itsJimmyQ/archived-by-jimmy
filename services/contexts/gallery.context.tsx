@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as i from 'types';
 
-import { useLoadImages, useViewport } from 'hooks';
+import { useDevice, useLoadImages } from 'hooks';
 import { getImages } from 'queries/images';
 
 export const GalleryContext = React.createContext<GalleryContext | null>(null);
@@ -15,12 +15,12 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [isReady, setIsReady] = React.useState<boolean>(false);
 
   const loadedImages = useLoadImages(availableImages);
-  const { viewport, isDetermined: isViewportDetermined } = useViewport();
+  const { device, isDetermined: isDeviceDetermined } = useDevice();
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
-  switch (viewport) {
-    case 'sm':
+  switch (device) {
+    case 'mobile':
       amountColumns = 1;
       spaces = {
         portrait: 1,
@@ -29,9 +29,8 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       };
 
       break;
-    case 'md':
-    case 'lg':
-      amountColumns = 4;
+    case 'desktop':
+      amountColumns = 6;
       spaces = {
         portrait: 2,
         landscape: 2,
@@ -39,8 +38,6 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       };
 
       break;
-    case 'xl':
-    case '2xl':
     default:
       amountColumns = 6;
       spaces = {
@@ -56,14 +53,14 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   }, []);
 
   React.useEffect(() => {
-    if (!isViewportDetermined || loadedImages.length === 0) return;
+    if (!isDeviceDetermined || loadedImages.length === 0) return;
 
     const imageGroups = groupImages(loadedImages, amountColumns!);
 
     // Load initial group and next group of images
     setImageGroups(imageGroups);
     setIsReady(true);
-  }, [loadedImages, viewport]);
+  }, [loadedImages, device]);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[], groupSize: number) => {

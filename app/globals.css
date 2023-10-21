@@ -20,32 +20,26 @@ body {
 }
 
 body:before {
-  content: 'sm';
+  content: 'mobile';
   display: none;
   visibility: hidden;
 }
 
 @media (min-width: 768px) {
   body:before {
-    content: 'md';
-  }
-}
-
-@media (min-width: 1024px) {
-  body:before {
-    content: 'lg';
+    content: 'tablet';
   }
 }
 
 @media (min-width: 1280px) {
   body:before {
-    content: 'xl';
+    content: 'desktop';
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 1440px) {
   body:before {
-    content: '2xl';
+    content: 'large';
   }
 }
 

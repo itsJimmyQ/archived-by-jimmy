@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-export const useViewport = () => {
-  const [viewport, setViewport] = React.useState<Viewport | undefined>(undefined);
+export const useDevice = () => {
+  const [device, setDevice] = React.useState<Device | undefined>(undefined);
 
   React.useEffect(() => {
     const updateViewport = () => {
       const currViewport = getViewport();
 
-      setViewport(currViewport);
+      setDevice(currViewport);
     };
 
     updateViewport();
@@ -19,13 +19,13 @@ export const useViewport = () => {
   }, []);
 
   const getViewport = () => {
-    return window.getComputedStyle(document.body, ':before').content.replace(/\"/g, '') as Viewport;
+    return window.getComputedStyle(document.body, ':before').content.replace(/\"/g, '') as Device;
   };
 
   return {
-    viewport,
-    isDetermined: !!viewport,
+    device,
+    isDetermined: !!device,
   };
 };
 
-type Viewport = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+type Device = 'mobile' | 'tablet' | 'desktop' | 'large';
