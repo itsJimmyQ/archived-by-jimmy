@@ -5,20 +5,19 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { AnimatePresence } from 'framer-motion';
 
-import { useCursor, useGallery } from 'hooks';
+import { useGallery } from 'hooks';
 
 import { GalleryImage } from './GalleryImage';
 
 export const GalleryView = () => {
   const { activeImages, isReady } = useGallery();
-  const { setCursorMode } = useCursor();
 
   return (
     <>
       <div
         className={clsx(
-          'w-full h-full overflow-hidden py-6 md:py-10',
-          'grid grid-rows-1 grid-cols-1 md:grid-cols-4 xl:grid-cols-6 place-items-center gap-10',
+          'w-full h-full overflow-hidden py-4 tablet:py-6',
+          'grid grid-rows-1 grid-cols-1 desktop:grid-cols-6 large:grid-cols-6 place-items-center gap-10',
         )}
       >
         <AnimatePresence mode="wait">

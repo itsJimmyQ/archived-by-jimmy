@@ -23,6 +23,11 @@ module.exports = {
       serif: ['Erode', 'sans-serif'],
       sans: ['General Sans', 'sans-serif'],
     },
+    screens: {
+      tablet: '768px',
+      desktop: '1280px',
+      large: '1440px',
+    },
     extend: {},
   },
   plugins: [],
