@@ -36,18 +36,24 @@ export const GalleryImage = ({ image, index }: GalleryImageProps) => {
       animate={isPainted ? 'visible' : 'hidden'}
       exit="exit"
       variants={VARIANTS_IMAGE}
-      className={clsx('w-full relative rounded-sm col-span-2', {
+      className={clsx('w-full relative rounded-lg col-span-2 group cursor-zoom-in', {
         'aspect-[12/16]': image.orientation === 'portrait',
         'aspect-[16/12]': image.orientation === 'landscape',
         'aspect-square': image.orientation === 'square',
       })}
     >
       <img
-        className="w-full h-full object-cover object-center rounded-sm"
+        className="w-full h-full object-cover object-center rounded-sm "
         src={image.src}
         alt={image.title}
         // Detect when the image is painted instead of loaded to DOM
         onLoad={() => setIsPainted(true)}
+      />
+      <span
+        className={clsx(
+          'desktop:w-[calc(100%+24px)] desktop:h-[calc(100%+24px)] large:w-[calc(100%+32px)] large:h-[calc(100%+32px)] absolute -z-10 border border-ivory-300 rounded-[4px] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] opacity-0',
+          'group group-hover:opacity-100 transition-all ease-linear duration-100',
+        )}
       />
     </motion.div>
   );
