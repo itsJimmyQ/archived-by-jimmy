@@ -11,7 +11,7 @@ export const Icon = ({ icon: IconComponent, color = 'grass', size = 'md' }: Icon
         },
         {
           'fill-grass-300': color === 'grass',
-          'fill-ivory-100': color === 'ivory',
+          'fill-ivory-300': color === 'ivory',
         },
       )}
     />

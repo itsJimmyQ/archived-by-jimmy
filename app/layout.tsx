@@ -24,7 +24,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body
         className={clsx(
           'w-screen h-[100dvh] flex flex-col relative overflow-hidden bg-ivory-100',
-          'px-4 tablet:px-6 desktop:px-12 large:px-32',
+          'px-6 tablet:px-6 desktop:px-12 large:px-32',
         )}
       >
         <Providers>
