@@ -21,6 +21,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
   switch (device) {
     case 'mobile':
+    case 'tablet':
       amountColumns = 1;
       spaces = {
         portrait: 1,
