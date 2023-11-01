@@ -29,7 +29,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <Providers>
           <Header />
-          <main className="w-full flex flex-1">{children}</main>
+          <main className="w-full flex flex-col flex-1">{children}</main>
         </Providers>
       </body>
     </html>

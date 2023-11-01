@@ -24,7 +24,7 @@ export const useDevice = () => {
 
   return {
     device,
-    isDetermined: !!device,
+    isDeviceDetermined: !!device,
   };
 };
 

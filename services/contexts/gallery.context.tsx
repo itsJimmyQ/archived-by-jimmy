@@ -15,7 +15,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [isReady, setIsReady] = React.useState<boolean>(false);
 
   const loadedImages = useLoadImages(availableImages);
-  const { device, isDetermined: isDeviceDetermined } = useDevice();
+  const { device, isDeviceDetermined } = useDevice();
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
