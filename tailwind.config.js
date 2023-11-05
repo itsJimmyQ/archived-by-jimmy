@@ -17,6 +17,14 @@ module.exports = {
         200: '#EBE9DF',
         100: '#FBFAF4',
       },
+      purple: {
+        300: '#BC36FF',
+        100: '#FDF3FF',
+      },
+      blue: {
+        300: '#2998FF',
+        100: '#F2F8FF',
+      },
       white: '#ffffff',
     },
     fontFamily: {
