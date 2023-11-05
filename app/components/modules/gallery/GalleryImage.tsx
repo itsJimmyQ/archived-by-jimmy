@@ -38,7 +38,7 @@ export const GalleryImage = ({ image, index }: GalleryImageProps) => {
       variants={VARIANTS_IMAGE}
       className={clsx('w-full relative rounded-lg col-span-2 group cursor-zoom-in', {
         'aspect-[12/16]': image.orientation === 'portrait',
-        'aspect-[16/12]': image.orientation === 'landscape',
+        'aspect-[16/10]': image.orientation === 'landscape',
         'aspect-square': image.orientation === 'square',
       })}
     >
