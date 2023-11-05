@@ -3,7 +3,6 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
-import { AnimatePresence } from 'framer-motion';
 
 import { AboutViewMobile } from 'modules/about';
 
