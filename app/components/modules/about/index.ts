@@ -1,2 +1,2 @@
-export * from './AboutView';
 export * from './AboutViewMobile';
+export * from './AboutViewDesktop';

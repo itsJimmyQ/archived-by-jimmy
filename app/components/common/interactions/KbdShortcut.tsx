@@ -16,6 +16,8 @@ export const KbdShortcut = ({ shortcutKey, label, onUse }: KbdShortcutProps) => 
   }, [onUse]);
 
   const onKeyDown = (e: KeyboardEvent) => {
+    console.log(e.code);
+
     if (e.code !== shortcutKey) return;
 
     onUse();
@@ -25,8 +27,9 @@ export const KbdShortcut = ({ shortcutKey, label, onUse }: KbdShortcutProps) => 
 
   return (
     <button
-      className={clsx('flex items-center gap-4 border-none bg-transparent cursor-pointer', 'group')}
+      className={clsx('flex items-center gap-4 border-none bg-transparent cursor-pointer group')}
       type="button"
+      title={`Press ${kbdLabel.toUpperCase()} to ${label}`}
       onClick={onUse}
     >
       <span

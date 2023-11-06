@@ -4,6 +4,7 @@ import Head from 'next/head';
 import clsx from 'clsx';
 
 import { Header, Providers } from 'common/general';
+import { RootWrapper } from 'modules/RootWrapper';
 
 import './globals.css';
 

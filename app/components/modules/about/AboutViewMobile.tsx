@@ -7,10 +7,12 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
-import ImageBio from 'public/images/bio.jpg';
 import { twMerge } from 'tailwind-merge';
 
 import { Icon } from 'common/general';
+import { useModal } from 'hooks/useModal';
+import ImageBio from 'images/bio.jpg';
+import { MODAL_IDS } from 'services/constants';
 import IconChevronDown from 'vectors/chevron_down.svg';
 
 const variantsBody = {
@@ -38,7 +40,7 @@ const variantsOverlay = {
     opacity: 0,
   },
   animate: {
-    opacity: 1,
+    opacity: 0.6,
     transition: {
       duration: 0.2,
       ease: 'easeInOut',
@@ -46,10 +48,12 @@ const variantsOverlay = {
   },
 };
 
-export const AboutViewMobile = ({ isOpened, onClose }: AboutViewMobileProps) => {
+export const AboutViewMobile = () => {
+  const { openedModalId, onCloseModal } = useModal();
+
   return (
     <AnimatePresence>
-      {isOpened && (
+      {openedModalId === MODAL_IDS.ABOUT && (
         <>
           <motion.div
             className={twMerge(
@@ -66,7 +70,8 @@ export const AboutViewMobile = ({ isOpened, onClose }: AboutViewMobileProps) => 
                 icon={IconChevronDown}
                 color="ivory"
                 className="absolute top-[50%] right-6 translate-y-[-50%]"
-                onClick={onClose}
+                title="Close 'about & contact'"
+                onClick={onCloseModal}
               />
             </div>
             <div className="h-full px-4 py-20 overflow-auto">
@@ -130,20 +135,15 @@ export const AboutViewMobile = ({ isOpened, onClose }: AboutViewMobileProps) => 
           </motion.div>
 
           <motion.div
-            className="w-full h-[100dvh] bg-ivory-300 opacity-40 absolute z-10 top-0 left-0"
+            className="w-full h-[100dvh] bg-ivory-300 absolute z-10 top-0 left-0"
             variants={variantsOverlay}
             initial="initial"
             animate="animate"
             exit="initial"
-            onClick={onClose}
+            onClick={onCloseModal}
           />
         </>
       )}
     </AnimatePresence>
   );
-};
-
-type AboutViewMobileProps = {
-  isOpened: boolean;
-  onClose: () => void;
 };

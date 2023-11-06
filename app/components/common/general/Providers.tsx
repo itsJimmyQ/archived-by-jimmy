@@ -1,9 +1,13 @@
 'use client';
 
-import { GalleryProvider } from 'contexts';
+import { GalleryProvider, ModalProvider } from 'contexts';
 
 export const Providers = ({ children }: ProvidersProps) => {
-  return <GalleryProvider>{children}</GalleryProvider>;
+  return (
+    <GalleryProvider>
+      <ModalProvider>{children}</ModalProvider>
+    </GalleryProvider>
+  );
 };
 
 type ProvidersProps = {
