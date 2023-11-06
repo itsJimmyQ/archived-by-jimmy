@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import clsx from 'clsx';
 
-import { AboutViewMobile } from 'modules/about';
+import { AboutView, AboutViewMobile } from 'modules/about';
 
 import { Logo, ViewportContainer } from '.';
 
@@ -40,10 +40,7 @@ export const Header = () => {
           </p>
         </ViewportContainer.Desktop>
       </header>
-
-      <ViewportContainer.Mobile>
-        <AboutViewMobile isOpened={isAboutOpened} onClose={() => setIsAboutOpened(false)} />
-      </ViewportContainer.Mobile>
+      <AboutView isOpened={isAboutOpened} onClose={() => setIsAboutOpened(false)} />
     </div>
   );
 };
