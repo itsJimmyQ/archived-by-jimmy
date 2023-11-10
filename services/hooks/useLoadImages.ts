@@ -22,7 +22,7 @@ export const useLoadImages = (images: i.FormattedImage[], isPreloadRequired: boo
   }, []);
 
   React.useEffect(() => {
-    if (!worker || images.length === 0 || !isPreloadRequired) return;
+    if (!worker || images?.length === 0 || !isPreloadRequired) return;
 
     worker.postMessage({ images });
   }, [images]);

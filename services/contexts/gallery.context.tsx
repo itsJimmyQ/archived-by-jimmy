@@ -10,7 +10,7 @@ export const GalleryContext = React.createContext<GalleryContext | null>(null);
 
 export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
-  const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(false);
+  const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(true);
   const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
 
   const { device } = useDevice();
@@ -89,13 +89,10 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
     for (let i = 0; i < remainingImages.length; i++) {
       const currImage = remainingImages[i];
 
-      if (spaces![currImage.orientation] > remainingSpaces) {
-        continue;
-      }
-
       currImageGroup.push(currImage);
       remainingImages.splice(i, 1);
       remainingSpaces -= spaces![currImage.orientation];
+      i--;
 
       if (remainingSpaces === 0) {
         break;
@@ -111,14 +108,19 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const onShuffleImages = () => {
     let newGroupIndex: number | undefined = undefined;
 
-    if (currGroupIndex < imageGroups.length - 2) {
+    if (currGroupIndex < imageGroups.length - 1) {
       newGroupIndex = currGroupIndex + 1;
+
+      if (newGroupIndex === imageGroups.length - 1) {
+        setIsPreloadRequired(false);
+      } else {
+        setIsPreloadRequired(true);
+      }
     } else {
       newGroupIndex = 0;
     }
 
     setCurrGroupIndex(newGroupIndex);
-    setIsPreloadRequired(true);
   };
 
   return (
