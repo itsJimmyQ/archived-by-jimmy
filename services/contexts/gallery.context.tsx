@@ -3,16 +3,20 @@
 import * as React from 'react';
 import * as i from 'types';
 
-import { useDevice } from 'hooks';
+import { useDevice, useLoadImages } from 'hooks';
 import { getImages } from 'queries/images';
 
 export const GalleryContext = React.createContext<GalleryContext | null>(null);
 
 export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
+  const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(false);
   const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
 
   const { device } = useDevice();
+
+  const activeImages = imageGroups[currGroupIndex];
+  const preloadedImages = useLoadImages(imageGroups[currGroupIndex + 1], isPreloadRequired);
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
@@ -45,12 +49,21 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       };
   }
 
-  // Initial setup
   React.useEffect(() => {
     if (!amountColumns) return;
 
     getImages().then((res) => setImageGroups(groupImages(res.results, amountColumns!)));
   }, [amountColumns]);
+
+  React.useEffect(() => {
+    if (preloadedImages.length === 0 || currGroupIndex === imageGroups.length - 1) return;
+
+    const newImageGroup = [...imageGroups];
+    newImageGroup[currGroupIndex + 1] = preloadedImages;
+
+    setImageGroups(newImageGroup);
+    setIsPreloadRequired(false);
+  }, [preloadedImages]);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[], groupSize: number) => {
@@ -96,17 +109,22 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   };
 
   const onShuffleImages = () => {
+    let newGroupIndex: number | undefined = undefined;
+
     if (currGroupIndex < imageGroups.length - 2) {
-      setCurrGroupIndex(currGroupIndex + 1);
+      newGroupIndex = currGroupIndex + 1;
     } else {
-      setCurrGroupIndex(0);
+      newGroupIndex = 0;
     }
+
+    setCurrGroupIndex(newGroupIndex);
+    setIsPreloadRequired(true);
   };
 
   return (
     <GalleryContext.Provider
       value={{
-        activeImages: imageGroups[currGroupIndex],
+        activeImages: activeImages,
         amountImages: imageGroups.flat().length,
         isReady: imageGroups.length > 0,
         onShuffleImages,
