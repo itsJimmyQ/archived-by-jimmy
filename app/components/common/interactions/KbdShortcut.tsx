@@ -16,8 +16,6 @@ export const KbdShortcut = ({ shortcutKey, label, onUse }: KbdShortcutProps) => 
   }, [onUse]);
 
   const onKeyDown = (e: KeyboardEvent) => {
-    console.log(e.code);
-
     if (e.code !== shortcutKey) return;
 
     onUse();

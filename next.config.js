@@ -35,6 +35,7 @@ const config = (phase, config) => {
       buildActivity: true,
       buildActivityPosition: 'bottom-left',
     },
+    reactStrictMode: false,
     experimental: {
       appDir: true,
     },
