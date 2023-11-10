@@ -3,19 +3,16 @@
 import * as React from 'react';
 import * as i from 'types';
 
-import { useDevice, useLoadImages } from 'hooks';
+import { useDevice } from 'hooks';
 import { getImages } from 'queries/images';
 
 export const GalleryContext = React.createContext<GalleryContext | null>(null);
 
 export const GalleryProvider = ({ children }: GalleryProviderProps) => {
-  const [availableImages, setAvailableImages] = React.useState<i.FormattedImage[]>([]);
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
   const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
-  const [isReady, setIsReady] = React.useState<boolean>(false);
 
-  const loadedImages = useLoadImages(availableImages);
-  const { device, isDeviceDetermined } = useDevice();
+  const { device } = useDevice();
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
@@ -50,18 +47,10 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
 
   // Initial setup
   React.useEffect(() => {
-    getImages().then((res) => setAvailableImages(res.results));
-  }, []);
+    if (!amountColumns) return;
 
-  React.useEffect(() => {
-    if (!isDeviceDetermined || loadedImages.length === 0) return;
-
-    const imageGroups = groupImages(loadedImages, amountColumns!);
-
-    // Load initial group and next group of images
-    setImageGroups(imageGroups);
-    setIsReady(true);
-  }, [loadedImages, device]);
+    getImages().then((res) => setImageGroups(groupImages(res.results, amountColumns!)));
+  }, [amountColumns]);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[], groupSize: number) => {
@@ -118,8 +107,8 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
     <GalleryContext.Provider
       value={{
         activeImages: imageGroups[currGroupIndex],
-        amountImages: availableImages.length,
-        isReady,
+        amountImages: imageGroups.flat().length,
+        isReady: imageGroups.length > 0,
         onShuffleImages,
       }}
     >
