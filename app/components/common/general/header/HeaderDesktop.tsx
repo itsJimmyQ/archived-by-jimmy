@@ -21,8 +21,8 @@ export const HeaderDesktop = () => {
       >
         <Logo />
         {isReady && (
-          <p className={clsx('py-1 px-4 rounded-[99px] bg-ivory-200 text-ivory-300')}>
-            Last updated: {lastUpdatedAt}
+          <p className={clsx('py-1 px-4 rounded-[99px] text-sm bg-ivory-200 text-ivory-300')}>
+            Last updated {lastUpdatedAt}
           </p>
         )}
       </header>
