@@ -3,7 +3,7 @@ import * as i from 'types';
 
 import { OutgoingMessagePayload } from 'services/workers/types';
 
-export const useLoadImages = (images: i.FormattedImage[]) => {
+export const useLoadImages = (images: i.FormattedImage[], isPreloadRequired: boolean) => {
   const [worker, setWorker] = React.useState<Worker>();
   const [loadedImages, setLoadedImages] = React.useState<i.FormattedImage[]>([]);
 
@@ -22,10 +22,10 @@ export const useLoadImages = (images: i.FormattedImage[]) => {
   }, []);
 
   React.useEffect(() => {
-    if (!worker || images.length === 0) return;
+    if (!worker || images?.length === 0 || !isPreloadRequired) return;
 
     worker.postMessage({ images });
-  }, [images.length]);
+  }, [images]);
 
   const onMessage = (e: MessageEvent<OutgoingMessagePayload>) => {
     setLoadedImages(e.data.images);

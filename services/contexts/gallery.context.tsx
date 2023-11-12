@@ -3,19 +3,24 @@
 import * as React from 'react';
 import * as i from 'types';
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { useDevice, useLoadImages } from 'hooks';
 import { getImages } from 'queries/images';
+
+dayjs.extend(relativeTime);
 
 export const GalleryContext = React.createContext<GalleryContext | null>(null);
 
 export const GalleryProvider = ({ children }: GalleryProviderProps) => {
-  const [availableImages, setAvailableImages] = React.useState<i.FormattedImage[]>([]);
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
-  const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
-  const [isReady, setIsReady] = React.useState<boolean>(false);
+  const [activeGroupIndex, setActiveGroupIndex] = React.useState<number>(0);
+  const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(true);
+  const [lastUpdatedAt, setLastUpdatedAt] = React.useState<string | undefined>(undefined);
 
-  const loadedImages = useLoadImages(availableImages);
-  const { device, isDeviceDetermined } = useDevice();
+  const preloadedImages = useLoadImages(imageGroups[activeGroupIndex + 1], isPreloadRequired);
+  const { device } = useDevice();
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
@@ -31,14 +36,6 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
 
       break;
     case 'desktop':
-      amountColumns = 6;
-      spaces = {
-        portrait: 2,
-        landscape: 2,
-        square: 2,
-      };
-
-      break;
     default:
       amountColumns = 6;
       spaces = {
@@ -48,20 +45,26 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       };
   }
 
-  // Initial setup
+  // Fetch and group images from Contentful
   React.useEffect(() => {
-    getImages().then((res) => setAvailableImages(res.results));
-  }, []);
+    if (!amountColumns) return;
+
+    getImages().then((res) => {
+      const currImageGroups = groupImages(res.results, amountColumns!);
+
+      setLastUpdatedAt(res.last_updated_at);
+      setImageGroups(currImageGroups);
+    });
+  }, [amountColumns]);
 
   React.useEffect(() => {
-    if (!isDeviceDetermined || loadedImages.length === 0) return;
+    if (imageGroups.length === 0 || preloadedImages.length === 0) return;
 
-    const imageGroups = groupImages(loadedImages, amountColumns!);
+    const updatedImageGroups = [...imageGroups];
+    updatedImageGroups[activeGroupIndex + 1] = preloadedImages;
 
-    // Load initial group and next group of images
-    setImageGroups(imageGroups);
-    setIsReady(true);
-  }, [loadedImages, device]);
+    setImageGroups(updatedImageGroups);
+  }, [preloadedImages, imageGroups]);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[], groupSize: number) => {
@@ -87,13 +90,10 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
     for (let i = 0; i < remainingImages.length; i++) {
       const currImage = remainingImages[i];
 
-      if (spaces![currImage.orientation] > remainingSpaces) {
-        continue;
-      }
-
       currImageGroup.push(currImage);
       remainingImages.splice(i, 1);
       remainingSpaces -= spaces![currImage.orientation];
+      i--;
 
       if (remainingSpaces === 0) {
         break;
@@ -107,19 +107,33 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   };
 
   const onShuffleImages = () => {
-    if (currGroupIndex < imageGroups.length - 2) {
-      setCurrGroupIndex(currGroupIndex + 1);
+    let newActiveGroupIndex: number | undefined = undefined;
+    let isPreloadRequired = true;
+    const maxGroupIndex = imageGroups.length - 1;
+
+    if (activeGroupIndex < maxGroupIndex) {
+      newActiveGroupIndex = activeGroupIndex + 1;
+
+      if (activeGroupIndex === maxGroupIndex - 1) {
+        isPreloadRequired = false;
+      }
     } else {
-      setCurrGroupIndex(0);
+      newActiveGroupIndex = 0;
+      isPreloadRequired = false;
     }
+
+    setIsPreloadRequired(isPreloadRequired);
+    setActiveGroupIndex(newActiveGroupIndex);
   };
 
   return (
     <GalleryContext.Provider
       value={{
-        activeImages: imageGroups[currGroupIndex],
-        amountImages: availableImages.length,
-        isReady,
+        activeImages: imageGroups[activeGroupIndex],
+        amountImages: imageGroups.flat().length,
+        lastUpdatedAt: dayjs().to(dayjs(lastUpdatedAt)),
+        isReady:
+          imageGroups.length > 0 && imageGroups[activeGroupIndex].length > 0 && !!lastUpdatedAt,
         onShuffleImages,
       }}
     >
@@ -135,6 +149,7 @@ type GalleryProviderProps = {
 type GalleryContext = {
   activeImages: i.FormattedImage[];
   amountImages: number;
+  lastUpdatedAt: string | undefined;
   isReady: boolean;
   onShuffleImages: () => void;
 };

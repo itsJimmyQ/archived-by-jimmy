@@ -13,22 +13,20 @@ export const GalleryView = () => {
   const { activeImages, isReady } = useGallery();
 
   return (
-    <>
-      <div
-        className={clsx(
-          'w-full h-full',
-          'grid grid-rows-1 grid-cols-1 desktop:grid-cols-6 large:grid-cols-6 place-items-center gap-10',
-        )}
-      >
-        <AnimatePresence mode="wait">
-          <>
-            {isReady &&
-              activeImages.map((image, index) => (
-                <GalleryImage key={image.src} {...{ image, index }} />
-              ))}
-          </>
-        </AnimatePresence>
-      </div>
-    </>
+    <div
+      className={clsx(
+        'w-full h-full',
+        'grid grid-rows-1 grid-cols-1 desktop:grid-cols-6 large:grid-cols-6 place-items-center gap-10',
+      )}
+    >
+      <AnimatePresence mode="wait">
+        <>
+          {isReady &&
+            activeImages.map((image, index) => (
+              <GalleryImage key={image.src} {...{ image, index }} />
+            ))}
+        </>
+      </AnimatePresence>
+    </div>
   );
 };
