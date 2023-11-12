@@ -10,13 +10,11 @@ export const GalleryContext = React.createContext<GalleryContext | null>(null);
 
 export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
+  const [activeGroupIndex, setActiveGroupIndex] = React.useState<number>(0);
   const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(true);
-  const [currGroupIndex, setCurrGroupIndex] = React.useState<number>(0);
 
+  const preloadedImages = useLoadImages(imageGroups[activeGroupIndex + 1], isPreloadRequired);
   const { device } = useDevice();
-
-  const activeImages = imageGroups[currGroupIndex];
-  const preloadedImages = useLoadImages(imageGroups[currGroupIndex + 1], isPreloadRequired);
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
@@ -32,14 +30,6 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
 
       break;
     case 'desktop':
-      amountColumns = 6;
-      spaces = {
-        portrait: 2,
-        landscape: 2,
-        square: 2,
-      };
-
-      break;
     default:
       amountColumns = 6;
       spaces = {
@@ -49,21 +39,25 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       };
   }
 
+  // Fetch and group images from Contentful
   React.useEffect(() => {
     if (!amountColumns) return;
 
-    getImages().then((res) => setImageGroups(groupImages(res.results, amountColumns!)));
+    getImages().then((images) => {
+      const currImageGroups = groupImages(images.results, amountColumns!);
+
+      setImageGroups(currImageGroups);
+    });
   }, [amountColumns]);
 
   React.useEffect(() => {
-    if (preloadedImages.length === 0 || currGroupIndex === imageGroups.length - 1) return;
+    if (imageGroups.length === 0 || preloadedImages.length === 0) return;
 
-    const newImageGroup = [...imageGroups];
-    newImageGroup[currGroupIndex + 1] = preloadedImages;
+    const updatedImageGroups = [...imageGroups];
+    updatedImageGroups[activeGroupIndex + 1] = preloadedImages;
 
-    setImageGroups(newImageGroup);
-    setIsPreloadRequired(false);
-  }, [preloadedImages]);
+    setImageGroups(updatedImageGroups);
+  }, [preloadedImages, imageGroups]);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[], groupSize: number) => {
@@ -106,29 +100,31 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   };
 
   const onShuffleImages = () => {
-    let newGroupIndex: number | undefined = undefined;
+    let newActiveGroupIndex: number | undefined = undefined;
+    let isPreloadRequired = true;
+    const maxGroupIndex = imageGroups.length - 1;
 
-    if (currGroupIndex < imageGroups.length - 1) {
-      newGroupIndex = currGroupIndex + 1;
+    if (activeGroupIndex < maxGroupIndex) {
+      newActiveGroupIndex = activeGroupIndex + 1;
 
-      if (newGroupIndex === imageGroups.length - 1) {
-        setIsPreloadRequired(false);
-      } else {
-        setIsPreloadRequired(true);
+      if (activeGroupIndex === maxGroupIndex - 1) {
+        isPreloadRequired = false;
       }
     } else {
-      newGroupIndex = 0;
+      newActiveGroupIndex = 0;
+      isPreloadRequired = false;
     }
 
-    setCurrGroupIndex(newGroupIndex);
+    setIsPreloadRequired(isPreloadRequired);
+    setActiveGroupIndex(newActiveGroupIndex);
   };
 
   return (
     <GalleryContext.Provider
       value={{
-        activeImages: activeImages,
+        activeImages: imageGroups[activeGroupIndex],
         amountImages: imageGroups.flat().length,
-        isReady: imageGroups.length > 0,
+        isReady: imageGroups.length > 0 && imageGroups[activeGroupIndex].length > 0,
         onShuffleImages,
       }}
     >
