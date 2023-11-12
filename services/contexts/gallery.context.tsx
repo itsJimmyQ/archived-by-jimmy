@@ -3,8 +3,13 @@
 import * as React from 'react';
 import * as i from 'types';
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import { useDevice, useLoadImages } from 'hooks';
 import { getImages } from 'queries/images';
+
+dayjs.extend(relativeTime);
 
 export const GalleryContext = React.createContext<GalleryContext | null>(null);
 
@@ -12,6 +17,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [imageGroups, setImageGroups] = React.useState<i.FormattedImage[][]>([]);
   const [activeGroupIndex, setActiveGroupIndex] = React.useState<number>(0);
   const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(true);
+  const [lastUpdatedAt, setLastUpdatedAt] = React.useState<string | undefined>(undefined);
 
   const preloadedImages = useLoadImages(imageGroups[activeGroupIndex + 1], isPreloadRequired);
   const { device } = useDevice();
@@ -43,9 +49,10 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   React.useEffect(() => {
     if (!amountColumns) return;
 
-    getImages().then((images) => {
-      const currImageGroups = groupImages(images.results, amountColumns!);
+    getImages().then((res) => {
+      const currImageGroups = groupImages(res.results, amountColumns!);
 
+      setLastUpdatedAt(res.last_updated_at);
       setImageGroups(currImageGroups);
     });
   }, [amountColumns]);
@@ -124,7 +131,9 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
       value={{
         activeImages: imageGroups[activeGroupIndex],
         amountImages: imageGroups.flat().length,
-        isReady: imageGroups.length > 0 && imageGroups[activeGroupIndex].length > 0,
+        lastUpdatedAt: dayjs().to(dayjs(lastUpdatedAt)),
+        isReady:
+          imageGroups.length > 0 && imageGroups[activeGroupIndex].length > 0 && !!lastUpdatedAt,
         onShuffleImages,
       }}
     >
@@ -140,6 +149,7 @@ type GalleryProviderProps = {
 type GalleryContext = {
   activeImages: i.FormattedImage[];
   amountImages: number;
+  lastUpdatedAt: string | undefined;
   isReady: boolean;
   onShuffleImages: () => void;
 };

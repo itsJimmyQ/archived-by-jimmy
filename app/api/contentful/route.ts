@@ -1,6 +1,8 @@
-import { ImageContentType } from 'types';
 import { NextResponse } from 'next/server';
+import { ImageContentType } from 'types';
+
 import * as Contentful from 'contentful';
+
 import { convertEntryToImageObj } from 'services/convertEntryToImageObj';
 
 export const GET = async () => {
@@ -10,7 +12,11 @@ export const GET = async () => {
   });
 
   const entries = await client.getEntries<ImageContentType>({}).then((res) => res.items);
+  const lastUpdatedAt = entries.sort((entryA, entryB) =>
+    new Date(entryA.sys.createdAt) < new Date(entryB.sys.createdAt) ? 1 : -1,
+  )[0].sys.createdAt;
+
   const images = entries.map(convertEntryToImageObj).sort(() => (Math.random() <= 0.5 ? 1 : -1));
 
-  return NextResponse.json({ results: images });
+  return NextResponse.json({ results: images, last_updated_at: lastUpdatedAt });
 };

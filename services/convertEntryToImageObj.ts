@@ -1,4 +1,5 @@
 import { FormattedImage, ImageContentType } from 'types';
+
 import * as Contentful from 'contentful';
 
 export const convertEntryToImageObj = (entry: Contentful.Entry<ImageContentType>) => {

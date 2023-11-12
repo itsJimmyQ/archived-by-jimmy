@@ -4,12 +4,14 @@ import * as React from 'react';
 
 import clsx from 'clsx';
 
+import { useGallery } from 'hooks';
 import { AboutViewDesktop } from 'modules/about';
 
 import { Logo } from '..';
 
-// @TODO: Add dynamic data to 'Last updated'
 export const HeaderDesktop = () => {
+  const { lastUpdatedAt, isReady } = useGallery();
+
   return (
     <div className="w-full">
       <header
@@ -18,9 +20,11 @@ export const HeaderDesktop = () => {
         )}
       >
         <Logo />
-        <p className={clsx('py-1 px-4 rounded-[99px] bg-ivory-200 text-ivory-300')}>
-          Last updated: 2 weeks ago
-        </p>
+        {isReady && (
+          <p className={clsx('py-1 px-4 rounded-[99px] bg-ivory-200 text-ivory-300')}>
+            Last updated: {lastUpdatedAt}
+          </p>
+        )}
       </header>
 
       <AboutViewDesktop />
