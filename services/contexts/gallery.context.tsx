@@ -20,7 +20,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [lastUpdatedAt, setLastUpdatedAt] = React.useState<string | undefined>(undefined);
 
   const preloadedImages = useLoadImages(imageGroups[activeGroupIndex + 1], isPreloadRequired);
-  const { device } = useDevice();
+  const { device, isDeviceDetermined } = useDevice();
 
   let amountColumns: number | undefined = undefined;
   let spaces: Record<i.GalleryImageOrientation, number> | undefined = undefined;
@@ -47,15 +47,23 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
 
   // Fetch and group images from Contentful
   React.useEffect(() => {
-    if (!amountColumns) return;
+    if (!amountColumns || !isDeviceDetermined) return;
 
     getImages().then((res) => {
-      const currImageGroups = groupImages(res.results, amountColumns!);
+      let currImageGroups: i.FormattedImage[][] = [];
+
+      if (amountColumns === 1) {
+        currImageGroups = res.results.map((image) => [image]);
+      } else {
+        currImageGroups = groupImages(res.results, amountColumns!);
+      }
+
+      console.log(currImageGroups);
 
       setLastUpdatedAt(res.last_updated_at);
       setImageGroups(currImageGroups);
     });
-  }, [amountColumns]);
+  }, [amountColumns, isDeviceDetermined]);
 
   React.useEffect(() => {
     if (imageGroups.length === 0 || preloadedImages.length === 0) return;
