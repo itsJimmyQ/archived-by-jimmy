@@ -58,8 +58,6 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
         currImageGroups = groupImages(res.results, amountColumns!);
       }
 
-      console.log(currImageGroups);
-
       setLastUpdatedAt(res.last_updated_at);
       setImageGroups(currImageGroups);
     });

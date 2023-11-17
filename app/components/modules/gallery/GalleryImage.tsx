@@ -49,12 +49,6 @@ export const GalleryImage = ({ image, index }: GalleryImageProps) => {
         // Detect when the image is painted instead of loaded to DOM
         onLoad={() => setIsPainted(true)}
       />
-      {/* <span
-        className={clsx(
-          'desktop:w-[calc(100%+24px)] desktop:h-[calc(100%+24px)] large:w-[calc(100%+32px)] large:h-[calc(100%+32px)] absolute -z-10 border border-ivory-300 rounded-[4px] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] opacity-0',
-          'group group-hover:opacity-100 transition-all ease-linear duration-100',
-        )}
-      /> */}
     </motion.div>
   );
 };

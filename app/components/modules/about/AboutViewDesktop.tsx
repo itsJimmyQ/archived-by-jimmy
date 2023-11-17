@@ -111,6 +111,7 @@ export const AboutViewDesktop = () => {
                     href="mailto:jimmyqian717@gmail.com"
                     className={clsx(
                       'absolute font-medium text-3xl border border-grass-300 bg-grass-100 px-6 py-2 rounded-full text-grass-300 rotate-[-11deg] top-[-5%] left-[-8%]',
+                      'hover:scale-110 hover:rotate-[-14deg] transition-all duration-100 ease-linear',
                     )}
                   >
                     Email me
@@ -120,6 +121,7 @@ export const AboutViewDesktop = () => {
                     target="_blank"
                     className={clsx(
                       'absolute font-medium text-lg border border-purple-300 bg-purple-100 px-6 py-2 rounded-full text-purple-300 rotate-[6deg] top-[50%] right-[-12%]',
+                      'hover:scale-110 hover:rotate-[8deg] transition-all duration-100 ease-linear',
                     )}
                   >
                     DM me
@@ -129,6 +131,7 @@ export const AboutViewDesktop = () => {
                     target="_blank"
                     className={clsx(
                       'absolute font-medium border border-blue-300 bg-blue-100 px-6 py-2 rounded-full text-blue-300 rotate-[-5deg] bottom-[-5%] left-[-12%]',
+                      'hover:scale-110 hover:rotate-[-6deg] transition-all duration-100 ease-linear',
                     )}
                   >
                     Or Linkedin

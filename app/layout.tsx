@@ -10,7 +10,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'archived by jimmy',
-  description: '',
+  description:
+    'a digital archive of my photographs. a place where I record my progress towards becoming a greater creative.',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
