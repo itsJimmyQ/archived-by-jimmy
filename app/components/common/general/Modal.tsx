@@ -6,13 +6,20 @@ import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useDevice } from 'hooks';
+import IconClose from 'vectors/close.svg';
+
+import { Icon } from './Icon';
 
 const DESKTOP_variantsBody = {
   initial: {
     opacity: 0,
-    scale: 1.05,
+    scale: 1.03,
     x: '-50%',
     y: '-50%',
+    transition: {
+      duration: 0.2,
+      ease: 'easeIn',
+    },
   },
   animate: {
     opacity: 1,
@@ -22,16 +29,6 @@ const DESKTOP_variantsBody = {
     transition: {
       duration: 0.2,
       ease: 'easeOut',
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 1.05,
-    x: '-50%',
-    y: '-50%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeIn',
     },
   },
 };
@@ -107,6 +104,8 @@ type ModalOverlayProps = {
 };
 
 const ModalBody = ({ children }: ModalBodyProps) => {
+  const { device } = useDevice();
+
   return (
     <motion.div
       className={clsx(
@@ -116,6 +115,12 @@ const ModalBody = ({ children }: ModalBodyProps) => {
         'desktop:w-10/12 large:w-8/12 desktop:h-max desktop:top-1/2 desktop:left-1/2 desktop:transform desktop:-translate-x-1/2 desktop:-translate-y-1/2',
         'desktop:rounded-2xl flex flex-col',
       )}
+      variants={
+        device === 'mobile' || device === 'tablet' ? MOBILE_variantsBody : DESKTOP_variantsBody
+      }
+      initial="initial"
+      animate="animate"
+      exit="initial"
       role="dialog"
       aria-modal="true"
     >
@@ -128,16 +133,24 @@ type ModalBodyProps = {
   children: React.ReactNode;
 };
 
-const ModalHeader = ({ title }: ModalHeaderProps) => {
+const ModalHeader = ({ title, onCloseModal }: ModalHeaderProps) => {
   return (
-    <div className={clsx('w-full py-2 bg-ivory-200 rounded-t-3xl fixed z-20', 'desktop:static')}>
+    <div className={clsx('w-full py-2 bg-ivory-200 rounded-t-3xl fixed z-20', 'desktop:relative')}>
       <h6 className="font-medium text-center">{title}</h6>
+      <Icon
+        icon={IconClose}
+        color="ivory"
+        className="absolute top-[50%] right-6 translate-y-[-50%]"
+        title="Close 'about & contact'"
+        onClick={onCloseModal}
+      />
     </div>
   );
 };
 
 type ModalHeaderProps = {
   title: string;
+  onCloseModal: () => void;
 };
 
 const ModalContent = ({ children }: ModalContentProps) => {

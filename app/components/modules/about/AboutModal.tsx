@@ -3,59 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
-import { createPortal } from 'react-dom';
 
 import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
 
-import { Icon, Modal } from 'common/general';
+import { Modal } from 'common/general';
 import { useModal } from 'hooks/useModal';
 import ImageBio from 'images/bio.jpg';
 import { MODAL_IDS } from 'services/constants';
-import IconClose from 'vectors/close.svg';
-
-const variantsBody = {
-  initial: {
-    opacity: 0,
-    scale: 1.05,
-    x: '-50%',
-    y: '-50%',
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    x: '-50%',
-    y: '-50%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeOut',
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 1.05,
-    x: '-50%',
-    y: '-50%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeIn',
-    },
-  },
-};
-
-const variantsOverlay = {
-  initial: {
-    opacity: 0,
-  },
-  animate: {
-    opacity: 0.6,
-    transition: {
-      duration: 0.2,
-      ease: 'ease',
-    },
-  },
-};
 
 export const AboutModal = () => {
   const { openedModalId, onCloseModal } = useModal();
@@ -77,9 +31,9 @@ export const AboutModal = () => {
   return (
     <Modal.Root isOpened={openedModalId === MODAL_IDS.ABOUT} {...{ onCloseModal }}>
       <Modal.Body>
-        <Modal.Header title="about & contact" />
+        <Modal.Header title="about & contact" {...{ onCloseModal }} />
         <Modal.Content>
-          <div className="w-full flex flex-col content-center items-center gap-16">
+          <div className="w-full flex flex-col content-center items-center gap-10 desktop:gap-16">
             <div
               className={clsx(
                 'w-full h-full',
