@@ -1,2 +1,2 @@
 export * from './AboutViewMobile';
-export * from './AboutViewDesktop';
+export * from './AboutModal';

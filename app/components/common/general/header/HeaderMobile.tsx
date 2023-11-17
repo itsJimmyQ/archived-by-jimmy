@@ -6,7 +6,6 @@ import clsx from 'clsx';
 
 import { useGallery } from 'hooks';
 import { useModal } from 'hooks/useModal';
-import { AboutViewMobile } from 'modules/about';
 import { MODAL_IDS } from 'services/constants';
 
 import { Logo } from '..';
@@ -36,8 +35,6 @@ export const HeaderMobile = () => {
           about & contact
         </button>
       </header>
-
-      <AboutViewMobile />
     </div>
   );
 };

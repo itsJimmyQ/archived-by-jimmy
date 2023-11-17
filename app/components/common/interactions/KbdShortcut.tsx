@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import clsx from 'clsx';
 
-export const KbdShortcut = ({ shortcutKey, label, onUse }: KbdShortcutProps) => {
+export const KbdShortcut = ({ shortcutKey, label, isDisabled, onUse }: KbdShortcutProps) => {
   const kbdRef = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
@@ -16,7 +16,7 @@ export const KbdShortcut = ({ shortcutKey, label, onUse }: KbdShortcutProps) => 
   }, [onUse]);
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.code !== shortcutKey) return;
+    if (e.code !== shortcutKey || isDisabled) return;
 
     onUse();
   };
@@ -47,5 +47,6 @@ export const KbdShortcut = ({ shortcutKey, label, onUse }: KbdShortcutProps) => 
 type KbdShortcutProps = {
   shortcutKey: string;
   label: string;
+  isDisabled?: boolean;
   onUse: () => void;
 };

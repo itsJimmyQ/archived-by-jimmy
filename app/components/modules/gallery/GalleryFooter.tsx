@@ -11,7 +11,7 @@ import IconShuffle from 'vectors/shuffle.svg';
 
 export const GalleryFooter = () => {
   const { onShuffleImages } = useGallery();
-  const { onOpenModal } = useModal();
+  const { onOpenModal, isModalOpened } = useModal();
 
   return (
     <>
@@ -29,10 +29,16 @@ export const GalleryFooter = () => {
 
       <ViewportContainer.Desktop>
         <div className="w-full flex justify-center items-center gap-20 py-10">
-          <KbdShortcut label="shuffle" shortcutKey="Space" onUse={onShuffleImages} />
+          <KbdShortcut
+            label="shuffle"
+            shortcutKey="Space"
+            isDisabled={isModalOpened}
+            onUse={onShuffleImages}
+          />
           <KbdShortcut
             label="about & contact"
             shortcutKey="KeyA"
+            isDisabled={isModalOpened}
             onUse={() => onOpenModal(MODAL_IDS.ABOUT)}
           />
         </div>
