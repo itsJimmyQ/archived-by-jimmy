@@ -6,7 +6,8 @@ import * as React from 'react';
 
 import clsx from 'clsx';
 
-import { Modal } from 'common/general';
+import { Modal, ViewportContainer } from 'common/general';
+import { KbdShortcut } from 'common/interactions';
 import { useModal } from 'hooks/useModal';
 import ImageBio from 'images/bio.jpg';
 import { MODAL_IDS } from 'services/constants';
@@ -31,9 +32,9 @@ export const AboutModal = () => {
   return (
     <Modal.Root isOpened={openedModalId === MODAL_IDS.ABOUT} {...{ onCloseModal }}>
       <Modal.Body>
-        <Modal.Header title="about & contact" {...{ onCloseModal }} />
+        <Modal.Header title="About & Contact" {...{ onCloseModal }} />
         <Modal.Content>
-          <div className="w-full flex flex-col content-center items-center gap-10 desktop:gap-16">
+          <div className="w-full flex flex-col content-start items-center desktop:gap-16">
             <div
               className={clsx(
                 'w-full h-full',
@@ -43,7 +44,7 @@ export const AboutModal = () => {
             >
               <div
                 className={clsx(
-                  'w-[calc(100%-48px)] mx-auto desktop:w-full aspect-square relative',
+                  'w-[calc(100%-48px)] max-w-[480px] mx-auto desktop:w-full aspect-square relative',
                 )}
               >
                 <Image
@@ -55,6 +56,7 @@ export const AboutModal = () => {
                   fill
                 />
                 <Link
+                  title="Send me an email"
                   href="mailto:jimmyqian717@gmail.com"
                   className={clsx(
                     'btn-contact text-3xl border-grass-300 bg-grass-100 text-grass-300 rotate-[-11deg] top-[-5%] left-[-8%]',
@@ -64,20 +66,22 @@ export const AboutModal = () => {
                   Email me
                 </Link>
                 <Link
+                  title="Navigate to Jimmy' Instagram"
                   href="https://www.instagram.com/iamjimmyqian/"
                   target="_blank"
                   className={clsx(
-                    'text-lg border border-purple-300 bg-purple-100 text-purple-300 rotate-[6deg] top-[50%] right-[-12%]',
+                    'btn-contact text-lg border border-purple-300 bg-purple-100 text-purple-300 rotate-[6deg] top-[50%] right-[-12%]',
                     'hover:rotate-[8deg]',
                   )}
                 >
                   DM me
                 </Link>
                 <Link
+                  title="Navigate to Jimmy' Linkedin"
                   href="https://www.linkedin.com/in/jimmy-qian-38b381188/"
                   target="_blank"
                   className={clsx(
-                    'border-blue-300 bg-blue-100 text-blue-300 rotate-[-5deg] bottom-[-5%] left-[-12%]',
+                    'btn-contact border-blue-300 bg-blue-100 text-blue-300 rotate-[-5deg] bottom-[-5%] left-[-12%]',
                     'hover:rotate-[-6deg]',
                   )}
                 >
@@ -103,11 +107,10 @@ export const AboutModal = () => {
                 </p>
               </div>
             </div>
-            <p className="w-full desktop:w-10/12 large:text-center font-sans opacity-60 italic font-normal">
-              The photos you see were shot using a variety of cameras: Sony A7 Riii, Nikon D3500,
-              Hasselblad 500C and Canon EOS 3. I like to switch up my toys once in a while, it's a
-              nice trick for me to continuously create with joy.
-            </p>
+
+            <ViewportContainer.Desktop>
+              <KbdShortcut label="Close" shortcutKey="ESC" onUse={onCloseModal} />
+            </ViewportContainer.Desktop>
           </div>
         </Modal.Content>
       </Modal.Body>
