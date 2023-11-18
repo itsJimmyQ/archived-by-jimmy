@@ -19,6 +19,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
   const [activeGroupIndex, setActiveGroupIndex] = React.useState<number>(0);
   const [isPreloadRequired, setIsPreloadRequired] = React.useState<boolean>(true);
   const [lastUpdatedAt, setLastUpdatedAt] = React.useState<string | undefined>(undefined);
+  const [isImageGroupsReady, setIsImageGroupsReady] = React.useState<boolean>(false);
 
   const preloadedImages = useLoadImages(imageGroups[activeGroupIndex + 1], isPreloadRequired);
   const { device, isDeviceDetermined } = useDevice();
@@ -61,17 +62,19 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
 
       setLastUpdatedAt(res.last_updated_at);
       setImageGroups(currImageGroups);
+      setIsImageGroupsReady(true);
     });
   }, [amountColumns, isDeviceDetermined]);
 
   React.useEffect(() => {
-    if (imageGroups.length === 0 || preloadedImages.length === 0) return;
+    if (!isImageGroupsReady || preloadedImages.length === 0) return;
 
     const updatedImageGroups = [...imageGroups];
     updatedImageGroups[activeGroupIndex + 1] = preloadedImages;
 
     setImageGroups(updatedImageGroups);
-  }, [preloadedImages, imageGroups]);
+    setIsPreloadRequired(false);
+  }, [preloadedImages, isImageGroupsReady]);
 
   // Form image groups until there's no remaining orphan images
   const groupImages = (images: i.FormattedImage[], groupSize: number) => {
