@@ -57,8 +57,8 @@ export const AboutModal = () => {
                 <Link
                   href="mailto:jimmyqian717@gmail.com"
                   className={clsx(
-                    'absolute font-medium text-3xl border border-grass-300 bg-grass-100 px-6 py-2 rounded-full text-grass-300 rotate-[-11deg] top-[-5%] left-[-8%]',
-                    'hover:scale-110 hover:rotate-[-14deg] transition-all duration-100 ease-linear',
+                    'btn-contact text-3xl border-grass-300 bg-grass-100 text-grass-300 rotate-[-11deg] top-[-5%] left-[-8%]',
+                    'hover:rotate-[-14deg]',
                   )}
                 >
                   Email me
@@ -67,8 +67,8 @@ export const AboutModal = () => {
                   href="https://www.instagram.com/iamjimmyqian/"
                   target="_blank"
                   className={clsx(
-                    'absolute font-medium text-lg border border-purple-300 bg-purple-100 px-6 py-2 rounded-full text-purple-300 rotate-[6deg] top-[50%] right-[-12%]',
-                    'hover:scale-110 hover:rotate-[8deg] transition-all duration-100 ease-linear',
+                    'text-lg border border-purple-300 bg-purple-100 text-purple-300 rotate-[6deg] top-[50%] right-[-12%]',
+                    'hover:rotate-[8deg]',
                   )}
                 >
                   DM me
@@ -77,8 +77,8 @@ export const AboutModal = () => {
                   href="https://www.linkedin.com/in/jimmy-qian-38b381188/"
                   target="_blank"
                   className={clsx(
-                    'absolute font-medium border border-blue-300 bg-blue-100 px-6 py-2 rounded-full text-blue-300 rotate-[-5deg] bottom-[-5%] left-[-12%]',
-                    'hover:scale-110 hover:rotate-[-6deg] transition-all duration-100 ease-linear',
+                    'border-blue-300 bg-blue-100 text-blue-300 rotate-[-5deg] bottom-[-5%] left-[-12%]',
+                    'hover:rotate-[-6deg]',
                   )}
                 >
                   Or Linkedin

@@ -66,3 +66,9 @@ body:before {
     @apply text-base font-medium text-ivory-300;
   }
 }
+
+@layer components {
+  .btn-contact {
+    @apply absolute font-medium border px-6 py-2 rounded-full hover:scale-110 transition-all duration-100 ease-linear;
+  }
+}

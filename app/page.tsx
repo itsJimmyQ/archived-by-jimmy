@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 
-import { useModal } from 'hooks/useModal';
 import { AboutModal } from 'modules/about';
 import { GalleryFooter, GalleryView } from 'modules/gallery';
 
