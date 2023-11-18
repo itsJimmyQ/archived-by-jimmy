@@ -8,6 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { useDevice, useLoadImages } from 'hooks';
 import { getImages } from 'queries/images';
+import { isServer } from 'services/isServer';
 
 dayjs.extend(relativeTime);
 

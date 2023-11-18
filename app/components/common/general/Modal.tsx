@@ -1,58 +1,14 @@
 'use client';
 
-import { CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { useDevice } from 'hooks';
+import { isServer } from 'services/isServer';
 import IconClose from 'vectors/close.svg';
 
 import { Icon } from './Icon';
-
-const DESKTOP_variantsBody = {
-  initial: {
-    opacity: 0,
-    scale: 1.03,
-    x: '-50%',
-    y: '-50%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeIn',
-    },
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    x: '-50%',
-    y: '-50%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeOut',
-    },
-  },
-};
-
-const MOBILE_variantsBody = {
-  initial: {
-    y: '100%',
-  },
-  animate: {
-    y: '0%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeInOut',
-    },
-  },
-  exit: {
-    y: '100%',
-    transition: {
-      duration: 0.2,
-      ease: 'easeInOut',
-    },
-  },
-};
 
 const variantsOverlay = {
   initial: {
@@ -68,6 +24,8 @@ const variantsOverlay = {
 };
 
 const ModalRoot = ({ children, isOpened, onCloseModal }: ModalRootProps) => {
+  if (isServer) return null;
+
   return createPortal(
     <AnimatePresence>
       {isOpened && (
