@@ -1,5 +1,6 @@
 'use client';
 
+import { CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 
 import clsx from 'clsx';
@@ -104,23 +105,36 @@ type ModalOverlayProps = {
 };
 
 const ModalBody = ({ children }: ModalBodyProps) => {
-  const { device } = useDevice();
-
   return (
     <motion.div
+      variants={{
+        initial: {
+          opacity: 0,
+          scale: 'var(--scale-from)',
+          translate: 'var(--translate-from)',
+        },
+        animate: {
+          opacity: 1,
+          scale: 'var(--scale-to)',
+          translate: 'var(--translate-to)',
+          transition: {
+            duration: 0.2,
+            ease: 'easeOut',
+          },
+        },
+      }}
+      initial="initial"
+      animate="animate"
+      exit="initial"
       className={clsx(
         // Mobile
         'w-screen h-[calc(100dvh-40px)] absolute bottom-0 rounded-t-3xl bg-ivory-100 z-20 overflow-auto',
         // Desktop
         'desktop:w-10/12 large:w-8/12 desktop:h-max desktop:top-1/2 desktop:left-1/2 desktop:transform desktop:-translate-x-1/2 desktop:-translate-y-1/2',
         'desktop:rounded-2xl flex flex-col',
+        '[--scale-from:1] [--scale-to:1] [--translate-from:0%_100%] [--translate-to:0%_0%]',
+        'desktop:[--scale-from:1.03] desktop:[--scale-to:1] desktop:[--translate-from:-50%_-50%] [desktop:translate-to:-50%_-50%]',
       )}
-      variants={
-        device === 'mobile' || device === 'tablet' ? MOBILE_variantsBody : DESKTOP_variantsBody
-      }
-      initial="initial"
-      animate="animate"
-      exit="initial"
       role="dialog"
       aria-modal="true"
     >
