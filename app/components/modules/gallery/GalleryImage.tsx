@@ -9,33 +9,31 @@ import { motion } from 'framer-motion';
 export const GalleryImage = ({ image, index }: GalleryImageProps) => {
   const [isPainted, setIsPainted] = React.useState(false);
 
-  const VARIANTS_IMAGE = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.2,
-        delay: index * 0.1,
-        ease: 'linear',
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.2,
-        ease: 'linear',
-      },
-    },
-  };
-
   return (
     <motion.div
       initial="hidden"
       animate={isPainted ? 'visible' : 'hidden'}
       exit="exit"
-      variants={VARIANTS_IMAGE}
+      variants={{
+        hidden: {
+          opacity: 0,
+        },
+        visible: {
+          opacity: 1,
+          transition: {
+            duration: 0.2,
+            delay: index * 0.1,
+            ease: 'linear',
+          },
+        },
+        exit: {
+          opacity: 0,
+          transition: {
+            duration: 0.2,
+            ease: 'linear',
+          },
+        },
+      }}
       className={clsx('w-full relative col-span-2 group overflow-hidden', {
         'aspect-[12/16]': image.orientation === 'portrait',
         'aspect-[16/10]': image.orientation === 'landscape',

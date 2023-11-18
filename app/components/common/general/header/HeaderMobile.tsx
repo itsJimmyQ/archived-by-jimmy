@@ -21,14 +21,10 @@ export const HeaderMobile = () => {
           {isReady ? `Last updated ${lastUpdatedAt}` : 'loading...'}
         </p>
       </div>
-      <header
-        className={clsx(
-          'flex justify-between items-center z-10 px-6 tablet:px-6 desktop:px-12 large:px-32 py-4 desktop:py-6',
-        )}
-      >
+      <header className={clsx('flex justify-between items-center z-10', 'px-6 tablet:px-20 py-4')}>
         <Logo />
         <button
-          className={clsx('font-medium text-sm text-ivory-300')}
+          className={clsx('font-medium text-md text-ivory-300')}
           type="button"
           onClick={() => onOpenModal(MODAL_IDS.ABOUT)}
         >

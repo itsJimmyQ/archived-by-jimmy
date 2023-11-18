@@ -16,7 +16,7 @@ export const GalleryView = () => {
     <div
       className={clsx(
         'w-full h-full',
-        'grid grid-rows-1 grid-cols-1 desktop:grid-cols-6 large:grid-cols-6 place-items-center gap-10',
+        'grid grid-rows-1 grid-cols-1 desktop:grid-cols-6 large:grid-cols-6 place-items-center gap-10 tablet:gap-16',
       )}
     >
       <AnimatePresence mode="wait">

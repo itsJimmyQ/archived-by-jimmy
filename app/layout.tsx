@@ -27,18 +27,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           </Head>
           <body
             className={clsx(
-              'w-screen h-[100dvh] flex flex-col relative overflow-hidden bg-ivory-100',
+              'w-screen h-[100dvh] flex flex-col gap-4 relative overflow-hidden bg-ivory-100',
             )}
           >
             <Header />
-            <main
-              className={clsx(
-                'w-full flex flex-col flex-1',
-                'px-6 tablet:px-6 desktop:px-12 large:px-32',
-              )}
-            >
-              {children}
-            </main>
+            <main className={clsx('w-full flex-1', '')}>{children}</main>
           </body>
         </html>
       </StrictMode>
