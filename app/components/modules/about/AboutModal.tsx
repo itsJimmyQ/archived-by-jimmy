@@ -34,7 +34,7 @@ export const AboutModal = () => {
       <Modal.Body>
         <Modal.Header title="About & Contact" {...{ onCloseModal }} />
         <Modal.Content>
-          <div className="w-full h-full flex flex-col content-start items-center desktop:gap-10">
+          <div className="w-full h-full flex flex-col content-start items-center desktop:gap-12">
             <div
               className={clsx(
                 'w-full h-full',

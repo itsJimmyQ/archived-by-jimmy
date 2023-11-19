@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { createPortal } from 'react-dom';
 
 import clsx from 'clsx';
@@ -61,8 +62,42 @@ type ModalOverlayProps = {
 };
 
 const ModalBody = ({ children }: ModalBodyProps) => {
+  const refModalBody = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    if (!refModalBody.current) return;
+
+    document.addEventListener('keydown', onPressTab);
+
+    return () => {
+      document.removeEventListener('keydown', onPressTab);
+    };
+  }, [refModalBody.current]);
+
+  // Focus trap
+  const onPressTab = (e: KeyboardEvent) => {
+    if (!refModalBody.current) return;
+
+    const listFocusableElements = refModalBody.current.querySelectorAll(
+      'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select',
+    );
+    const firstElement = listFocusableElements[0] as HTMLElement;
+    const lastElement = listFocusableElements[listFocusableElements.length - 1] as HTMLElement;
+
+    if (e.code === 'Tab' && !e.shiftKey && document.activeElement === lastElement) {
+      firstElement.focus();
+
+      e.preventDefault();
+    } else if (e.code === 'TAB' && e.shiftKey && document.activeElement === firstElement) {
+      lastElement.focus();
+
+      e.preventDefault();
+    }
+  };
+
   return (
     <motion.div
+      ref={refModalBody}
       variants={{
         initial: {
           opacity: 'var(--opacity-from)',
