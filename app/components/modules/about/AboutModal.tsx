@@ -34,7 +34,7 @@ export const AboutModal = () => {
       <Modal.Body>
         <Modal.Header title="About & Contact" {...{ onCloseModal }} />
         <Modal.Content>
-          <div className="w-full flex flex-col content-start items-center desktop:gap-16">
+          <div className="w-full h-full flex flex-col content-start items-center desktop:gap-10">
             <div
               className={clsx(
                 'w-full h-full',
@@ -49,7 +49,7 @@ export const AboutModal = () => {
               >
                 <Image
                   src={ImageBio}
-                  alt="Self-portrait of Jimmy"
+                  alt="Smilling Jimmy"
                   objectFit="cover"
                   className="rounded-lg"
                   priority={true}
