@@ -89,7 +89,7 @@ export const AboutModal = () => {
                 </Link>
               </div>
 
-              <div className="w-full">
+              <div className="w-full pb-16 desktop:pb-0">
                 <p className="font-sans text-lg leading-[160%]">
                   My name is Jimmy, currently based in The Hague, Netherlands. Welcome to the space
                   where I archive a selection of my favourite shots.
