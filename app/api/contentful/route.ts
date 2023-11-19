@@ -15,8 +15,7 @@ export const GET = async () => {
   const lastUpdatedAt = entries.sort((entryA, entryB) =>
     new Date(entryA.sys.createdAt) < new Date(entryB.sys.createdAt) ? 1 : -1,
   )[0].sys.createdAt;
-
-  const images = entries.map(convertEntryToImageObj).sort(() => (Math.random() <= 0.5 ? 1 : -1));
+  const images = entries.map(convertEntryToImageObj);
 
   return NextResponse.json({ results: images, last_updated_at: lastUpdatedAt });
 };

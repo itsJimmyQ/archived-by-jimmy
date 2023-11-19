@@ -52,12 +52,13 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
     if (!amountColumns || !isDeviceDetermined) return;
 
     getImages().then((res) => {
+      const images = res.results.sort(() => (Math.random() <= 0.5 ? 1 : -1));
       let currImageGroups: i.FormattedImage[][] = [];
 
       if (amountColumns === 1) {
-        currImageGroups = res.results.map((image) => [image]);
+        currImageGroups = images.map((image) => [image]);
       } else {
-        currImageGroups = groupImages(res.results, amountColumns!);
+        currImageGroups = groupImages(images, amountColumns!);
       }
 
       setLastUpdatedAt(res.last_updated_at);
