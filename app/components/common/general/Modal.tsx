@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { KbdShortcut } from 'common/interactions';
 import { isServer } from 'services/isServer';
 import IconClose from 'vectors/close.svg';
 
@@ -106,15 +105,17 @@ type ModalBodyProps = {
 
 const ModalHeader = ({ title, onCloseModal }: ModalHeaderProps) => {
   return (
-    <div className={clsx('w-full py-2 bg-ivory-200 rounded-t-3xl z-20 relative')}>
-      <h6 className="font-medium text-ivory-300 text-center">{title}</h6>
-      <Icon
-        icon={IconClose}
-        color="ivory"
-        className="absolute top-[50%] right-6 translate-y-[-50%]"
-        title="Close 'about & contact'"
-        onClick={onCloseModal}
-      />
+    <div className={clsx('w-full fixed')}>
+      <div className={clsx('w-full py-2 bg-ivory-200 rounded-t-3xl z-20 relative')}>
+        <h6 className="font-medium text-ivory-300 text-center">{title}</h6>
+        <Icon
+          icon={IconClose}
+          color="ivory"
+          className="absolute top-[50%] right-6 translate-y-[-50%]"
+          title="Close 'about & contact'"
+          onClick={onCloseModal}
+        />
+      </div>
     </div>
   );
 };
@@ -128,8 +129,8 @@ const ModalContent = ({ children }: ModalContentProps) => {
   return (
     <div
       className={clsx(
-        'w-full px-6 tablet:px-10 py-10 tablet:py-16 overflow-auto',
-        'desktop:px-20 desktop:py-10',
+        'w-full px-6 tablet:px-10 py-10 tablet:py-16 pt-20 tablet:pt-[6rem] overflow-auto',
+        'desktop:px-20 desktop:py-10 desktop:pt-20',
       )}
     >
       {children}

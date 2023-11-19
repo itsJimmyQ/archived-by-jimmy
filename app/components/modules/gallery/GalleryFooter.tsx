@@ -31,7 +31,7 @@ export const GalleryFooter = () => {
         <div className="w-full flex justify-center items-center gap-20 py-10">
           <KbdShortcut
             label="shuffle"
-            shortcutKey="Space"
+            shortcutKey="KeyS"
             isDisabled={isModalOpened}
             onUse={onShuffleImages}
           />
