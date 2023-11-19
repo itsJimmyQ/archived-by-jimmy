@@ -17,7 +17,7 @@ const HomePage = () => {
   return (
     <div
       className={clsx(
-        'w-full h-full max-h-full flex flex-col justify-end',
+        'w-full h-full max-h-full grid grid-cols-1 grid-rows-[0.8fr_0.2fr] desktop:flex desktop:flex-col',
         'px-4 tablet:px-20 desktop:px-12 large:px-32',
       )}
     >

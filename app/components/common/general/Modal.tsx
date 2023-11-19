@@ -159,7 +159,9 @@ type ModalHeaderProps = {
 };
 
 const ModalContent = ({ children }: ModalContentProps) => {
-  return <div className={clsx('w-full overflow-auto px-6 py-12', 'desktop:px-16')}>{children}</div>;
+  return (
+    <div className={clsx('w-full px-6 py-12 overflow-y-auto', 'desktop:px-16')}>{children}</div>
+  );
 };
 
 type ModalContentProps = {

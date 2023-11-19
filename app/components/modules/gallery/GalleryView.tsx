@@ -15,7 +15,7 @@ export const GalleryView = () => {
   return (
     <div
       className={clsx(
-        'w-full h-full overflow-hidden',
+        'w-full h-full max-h-full overflow-hidden',
         'grid grid-rows-1 grid-cols-1 desktop:grid-cols-6 large:grid-cols-6 place-items-center desktop:gap-10',
       )}
     >

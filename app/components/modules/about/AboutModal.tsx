@@ -44,7 +44,7 @@ export const AboutModal = () => {
             >
               <div
                 className={clsx(
-                  'w-[calc(100%-48px)] max-w-[480px] mx-auto desktop:w-full aspect-square relative',
+                  'w-10/12 max-w-[480px] mx-auto desktop:w-full aspect-square relative',
                 )}
               >
                 <Image
