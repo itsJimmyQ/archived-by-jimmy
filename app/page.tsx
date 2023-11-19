@@ -10,15 +10,15 @@ import { GalleryFooter, GalleryView } from 'modules/gallery';
 const HomePage = () => {
   React.useEffect(() => {
     console.info(
-      'Designed and built by Jimmy ✨ \n https://www.linkedin.com/in/jimmy-qian-38b381188/',
+      'Designed and built by Jimmy ✨ \n https://www.linkedin.com/in/jimmy-qian-38b381188/ \n ',
     );
   }, []);
 
   return (
     <div
       className={clsx(
-        'w-full h-full flex flex-col items-between',
-        'px-6 tablet:px-20 desktop:px-12 large:px-32',
+        'w-full h-full max-h-full flex flex-col justify-end',
+        'px-4 tablet:px-20 desktop:px-12 large:px-32',
       )}
     >
       <GalleryView />

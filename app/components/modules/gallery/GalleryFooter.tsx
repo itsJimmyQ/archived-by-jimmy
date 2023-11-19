@@ -19,7 +19,7 @@ export const GalleryFooter = () => {
         <button
           className={clsx(
             'w-full flex justify-center items-center my-4 p-6 rounded-[4px] border border-ivory-300',
-            'group-hover:bg-ivory-200 transition-all ease-linear duration-200',
+            'group-hover:bg-ivory-200 transition-all ease-linear duration-200 active:bg-ivory-200',
           )}
           onClick={onShuffleImages}
         >

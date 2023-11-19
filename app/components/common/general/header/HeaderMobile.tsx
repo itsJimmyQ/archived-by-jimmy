@@ -21,7 +21,7 @@ export const HeaderMobile = () => {
           {isReady ? `Last updated ${lastUpdatedAt}` : 'loading...'}
         </p>
       </div>
-      <header className={clsx('flex justify-between items-center z-10', 'px-6 tablet:px-20 py-4')}>
+      <header className={clsx('flex justify-between items-center z-10', 'px-4 tablet:px-20 py-4')}>
         <Logo />
         <button
           className={clsx('font-medium text-md text-ivory-300')}
