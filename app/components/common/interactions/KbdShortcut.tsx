@@ -32,7 +32,7 @@ export const KbdShortcut = ({ shortcutKey, label, isDisabled, onUse }: KbdShortc
     >
       <span
         className={clsx(
-          'text-sm text-ivory-300 px-4 py-2 rounded-[4px] border border-ivory-300',
+          'text-ivory-300 px-4 py-2 rounded-[4px] border border-ivory-300',
           'group-hover:bg-ivory-200 transition-all ease-linear duration-200',
         )}
         ref={kbdRef}
