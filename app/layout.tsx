@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Head from 'next/head';
+import localFont from 'next/font/local';
 import { StrictMode } from 'react';
 
 import clsx from 'clsx';
@@ -14,20 +14,28 @@ export const metadata: Metadata = {
     'a digital archive of my photographs, a place where I record my progress towards becoming a greater creative.',
 };
 
+const generalSansVariable = localFont({
+  display: 'swap',
+  src: './GeneralSans-Variable.woff2',
+  variable: '--font-sans',
+});
+
+const erodeVariable = localFont({
+  display: 'swap',
+  src: 'Erode-Variable.woff2',
+  variable: '--font-serif',
+});
+
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Providers>
       <StrictMode>
         <html lang="en">
-          <Head>
-            <link
-              href="https://api.fontshare.com/v2/css?f[]=erode@500,600,601&f[]=general-sans@500,400&display=swap"
-              rel="stylesheet"
-            />
-          </Head>
           <body
             className={clsx(
               'w-screen h-[100dvh] flex flex-col gap-4 relative overflow-hidden bg-ivory-100',
+              generalSansVariable.variable,
+              erodeVariable.variable,
             )}
           >
             <Header />

@@ -16,7 +16,7 @@
 
 html,
 body {
-  font-family: 'General Sans', sans-serif;
+  font-family: var(--font-sans);
 }
 
 body:before {
