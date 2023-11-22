@@ -10,7 +10,7 @@ const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
 });
 
-const LOCALE = 'en-US';
+const locale = 'en-US';
 
 // This API call will request a space with the specified ID
 client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
@@ -20,20 +20,25 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
       content_type: 'image',
     });
 
-    const mediaAssets = await environment.getAssets().then((assets) => {
-      return assets.items;
-    });
+    const mediaAssets = await environment
+      .getAssets({
+        limit: 1000,
+      })
+      .then((assets) => {
+        console.log(assets);
+        return assets.items;
+      });
 
     console.info(`${mediaAssets.length} assets found.`);
 
     mediaAssets.forEach((asset) => {
       const { fields } = asset;
       const assetId = asset.sys.id;
-      const assetDimensions = fields.file[LOCALE].details.image;
+      const assetDimensions = fields.file[locale].details.image;
       const orientation = getAssetOrientation(assetDimensions);
 
       const isAssetAlreadyInEntries = existingEntries.find(
-        (entry) => entry.fields.asset[LOCALE].sys.id === assetId,
+        (entry) => entry.fields.asset[locale].sys.id === assetId,
       );
 
       if (!isAssetAlreadyInEntries) {
@@ -43,10 +48,10 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
               .createEntry('image', {
                 fields: {
                   title: {
-                    [LOCALE]: uuidv4(),
+                    [locale]: uuidv4(),
                   },
                   asset: {
-                    [LOCALE]: {
+                    [locale]: {
                       sys: {
                         type: 'Link',
                         linkType: 'Asset',
@@ -55,11 +60,12 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
                     },
                   },
                   orientation: {
-                    [LOCALE]: orientation,
+                    [locale]: orientation,
                   },
                 },
               })
               .then((entry) => {
+                newEntryCounter++;
                 entry.publish();
               }),
           100,
