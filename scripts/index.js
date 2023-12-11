@@ -65,7 +65,6 @@ client.getSpace(process.env.CONTENTFUL_SPACE_ID).then((space) => {
                 },
               })
               .then((entry) => {
-                newEntryCounter++;
                 entry.publish();
               }),
           100,
