@@ -3,12 +3,12 @@
 import * as React from 'react';
 import * as i from 'types';
 
+import { sendGAEvent } from '@next/third-parties/google';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { useDevice, useLoadImages } from 'hooks';
 import { getImages } from 'queries/images';
-import { isServer } from 'services/isServer';
 
 dayjs.extend(relativeTime);
 
@@ -135,6 +135,7 @@ export const GalleryProvider = ({ children }: GalleryProviderProps) => {
 
     setIsPreloadRequired(isPreloadRequired);
     setActiveGroupIndex(newActiveGroupIndex);
+    sendGAEvent({ event: 'shuffle_image' });
   };
 
   return (

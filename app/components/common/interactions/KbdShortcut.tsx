@@ -9,7 +9,6 @@ export const KbdShortcut = ({ shortcutKey, label, isDisabled, onUse }: KbdShortc
 
   React.useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      console.log(shortcutKey, e.code, isDisabled);
       if (e.code !== shortcutKey || isDisabled) return;
 
       onUse();
