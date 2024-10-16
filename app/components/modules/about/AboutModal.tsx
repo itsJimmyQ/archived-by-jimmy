@@ -50,8 +50,7 @@ export const AboutModal = () => {
                 <Image
                   src={ImageBio}
                   alt="Smilling Jimmy"
-                  objectFit="cover"
-                  className="rounded-lg"
+                  className="rounded-lg object-fit"
                   priority={true}
                   fill
                 />

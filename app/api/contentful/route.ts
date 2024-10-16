@@ -5,6 +5,8 @@ import * as Contentful from 'contentful';
 
 import { convertEntryToImageObj } from 'services/convertEntryToImageObj';
 
+export const revalidate = 0;
+
 export const GET = async () => {
   const client = Contentful.createClient({
     space: process.env.CONTENTFUL_SPACE_ID!,

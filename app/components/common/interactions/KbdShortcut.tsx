@@ -8,18 +8,19 @@ export const KbdShortcut = ({ shortcutKey, label, isDisabled, onUse }: KbdShortc
   const kbdRef = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      console.log(shortcutKey, e.code, isDisabled);
+      if (e.code !== shortcutKey || isDisabled) return;
+
+      onUse();
+    };
+
     window.addEventListener('keydown', onKeyDown);
 
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [onUse]);
-
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.code !== shortcutKey || isDisabled) return;
-
-    onUse();
-  };
+  }, [onUse, isDisabled]);
 
   const kbdLabel = shortcutKey.toLowerCase().includes('key') ? shortcutKey.slice(3) : shortcutKey;
 
@@ -28,7 +29,8 @@ export const KbdShortcut = ({ shortcutKey, label, isDisabled, onUse }: KbdShortc
       className={clsx('flex items-center gap-4 border-none bg-transparent cursor-pointer group')}
       type="button"
       title={`Press ${kbdLabel.toUpperCase()} to ${label}`}
-      onClick={onUse}
+      onClick={isDisabled ? undefined : onUse}
+      disabled={isDisabled}
     >
       <span
         className={clsx(
