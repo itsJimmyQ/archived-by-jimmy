@@ -5,8 +5,6 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
 
 const client = contentful.createClient({
-  // This is the access token for this space. Normally you get the token in the Contentful web app
-  // accessToken: process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
   accessToken: process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
 });
 
