@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { StrictMode } from 'react';
 
+import { GoogleAnalytics } from '@next/third-parties/google';
 import clsx from 'clsx';
 
 import { Header, Providers } from 'common/general';
@@ -41,6 +42,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <Header />
             <main className={clsx('w-full flex-1')}>{children}</main>
           </body>
+          {process.env.APP_ENV !== 'development' && (
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
+          )}
         </html>
       </StrictMode>
     </Providers>
