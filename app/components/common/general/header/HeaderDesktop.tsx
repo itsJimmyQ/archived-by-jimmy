@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { useGallery } from 'hooks';
 
@@ -19,11 +20,30 @@ export const HeaderDesktop = () => {
       )}
     >
       <Logo />
-      {isReady && (
-        <p className={clsx('py-1 px-4 rounded-[99px] text-sm bg-ivory-200 text-ivory-300')}>
-          Last updated {lastUpdatedAt}
-        </p>
-      )}
+      <AnimatePresence>
+        {isReady && (
+          <motion.p
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={{
+              hidden: {
+                opacity: 0,
+              },
+              visible: {
+                opacity: 1,
+                transition: {
+                  duration: 0.2,
+                  ease: 'linear',
+                },
+              },
+            }}
+            className={clsx('py-1 px-4 rounded-[99px] text-sm bg-ivory-200 text-ivory-300')}
+          >
+            Last updated {lastUpdatedAt}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

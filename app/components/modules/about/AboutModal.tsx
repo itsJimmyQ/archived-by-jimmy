@@ -34,7 +34,7 @@ export const AboutModal = () => {
       <Modal.Body>
         <Modal.Header title="About & Contact" {...{ onCloseModal }} />
         <Modal.Content>
-          <div className="w-full h-full flex flex-col content-start items-center desktop:gap-12">
+          <div className="w-full h-full flex flex-col content-start items-center desktop:gap-20">
             <div
               className={clsx(
                 'w-full h-full',
@@ -50,9 +50,8 @@ export const AboutModal = () => {
                 <Image
                   src={ImageBio}
                   alt="Smilling Jimmy"
-                  className="rounded-lg object-fit"
+                  className="aspect-square rounded-lg object-cover"
                   priority={true}
-                  fill
                 />
                 <Link
                   title="Send me an email"
@@ -77,7 +76,7 @@ export const AboutModal = () => {
                 </Link>
                 <Link
                   title="Navigate to Jimmy' Linkedin"
-                  href="https://www.linkedin.com/in/jimmy-qian-38b381188/"
+                  href="https://www.linkedin.com/in/longxiang-qian-38b381188/"
                   target="_blank"
                   className={clsx(
                     'btn-contact border-blue-300 bg-blue-100 text-blue-300 rotate-[-5deg] bottom-[-5%] left-[-12%]',
@@ -90,19 +89,19 @@ export const AboutModal = () => {
 
               <div className="w-full pb-16 desktop:pb-0">
                 <p className="font-sans text-lg leading-[160%]">
-                  My name is Jimmy, currently based in The Hague, Netherlands. Welcome to the space
-                  where I archive a selection of my favourite shots.
+                  Ayoooo! I'm Jimmy, a photographer currently based in The Hague, Netherlands.
+                  Welcome to the space where I showcase a selection of my favourite shots.
                   <br />
                   <br />
                   After a good couple years of photographing, I've come to the realization that what
-                  I desire, is to take photos that are timeless, that viewers would come back over
-                  and over to look at. Photographs that make people feel the emotions within the
-                  frames and really having to think about them. <br />
+                  I want, is to take photos that are timeless, that viewers would come back over and
+                  over to look at. Photographs that make people feel the emotions within the frames
+                  and really having to think about them. <br />
                   <br />
                   While I embark on the journey towards that goal, I chose to use a digital archive
-                  as an intuitive way of recording how I am evolving as a creative. If you enjoy
-                  what you see, feel free to reach out! I am open to any inquiries, requests or just
-                  a chat :D
+                  as an intuitive way to record how I am evolving as a creative. If you enjoy what
+                  you see, feel free to reach out! I am open to any inquiries, requests or just a
+                  chat :D
                 </p>
               </div>
             </div>
