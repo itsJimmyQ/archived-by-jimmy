@@ -125,7 +125,7 @@ const config = (phase, config) => {
 // https://nextjs.org/docs/advanced-features/security-headers
 const ContentSecurityPolicy = `
     default-src 'self' vercel.live;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.googletagmanager.com cdn.vercel-insights.com vercel.live;
     style-src 'self' 'unsafe-inline';
     img-src * blob:;
     media-src 'none';
